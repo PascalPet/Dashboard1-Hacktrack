@@ -9,7 +9,9 @@ import { ShellComponent } from './shell/shell.component';
 import { ClarityIcons,
           cogIcon,
           resizeIcon,
-          infoCircleIcon
+          infoCircleIcon,
+          refreshIcon,
+          exclamationCircleIcon
 } from '@cds/core/icon';
 import { BasicWidgetComponent } from './basic-widget/basic-widget.component';
 import { BasicScoreDisplayComponent } from './basic-score-display/basic-score-display.component';
@@ -43,8 +45,10 @@ import { EventMeasuresPipe } from "./pipes/event-measures.pipe";
 import { EventMeasuresFartherPipe } from "./pipes/event-measures-farther.pipe";
 import { CommunityMeasuresPipe } from "./pipes/community-measures.pipe";
 import {PolarChartMarginRemovalDirective} from "./directives/polar-chart-margin-removal.directive";
+import { FormsModule } from '@angular/forms';
+import { NoDataComponent } from './no-data/no-data.component';
 
-ClarityIcons.addIcons(cogIcon, resizeIcon, infoCircleIcon);
+ClarityIcons.addIcons(cogIcon, resizeIcon, infoCircleIcon, refreshIcon, exclamationCircleIcon);
 
 @NgModule({
   declarations: [
@@ -80,7 +84,8 @@ ClarityIcons.addIcons(cogIcon, resizeIcon, infoCircleIcon);
     EventMeasuresPipe,
     EventMeasuresFartherPipe,
     CommunityMeasuresPipe,
-    PolarChartMarginRemovalDirective
+    PolarChartMarginRemovalDirective,
+    NoDataComponent
   ],
   imports: [
     BrowserModule,
@@ -88,7 +93,8 @@ ClarityIcons.addIcons(cogIcon, resizeIcon, infoCircleIcon);
     ClarityModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    NgxChartsModule
+    NgxChartsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

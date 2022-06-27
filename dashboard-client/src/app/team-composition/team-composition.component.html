@@ -8,27 +8,27 @@
     <div class="card-body">
         <div class="clr-row">
             <div class="clr-col-2">
-                <app-long-answers-list
+                <app-long-answers-list *ngIf="formData.teamID.length > 0; else noNamesData"
                     [captionTooltip]="'Team Names'" 
                     [captionText]="'The Name of Teams participating'"
                     [answerList]="formData.teamID">
                 </app-long-answers-list>
             </div>
             <div class="clr-col-2">
-                <app-basic-score-display 
+                <app-basic-score-display *ngIf="formData.teamSize !== null; else noPeopleData"
                     [captionTooltip]="'Average Team size'" 
                     [scoreNumber]="formData.teamSize" 
                     [captionText]="'The Number of People'">
                 </app-basic-score-display>
             </div>
             <div class="clr-col-2">
-                <app-long-answers-list 
+                <app-long-answers-list *ngIf="formData.resourcesURL.length > 0; else noResourcesData"
                 [captionTooltip]="'Shows the provided URL.'" 
                 [answerList]="formData.resourcesURL" 
-                [captionText]="'ResourcesURL'"></app-long-answers-list>
+                [captionText]="'Resources URL'"></app-long-answers-list>
             </div>
             <div class="clr-col-2">
-                <div class="chart-container">
+                <div class="chart-container" *ngIf="formData.TeamLeader.length > 0; else noLeaderData">
                     <div class="chart-wrapper">
                         <ngx-charts-bar-vertical [results]="formData.TeamLeader" [xAxis]="true" [barPadding]="4"
                         [showYAxisLabel]="false" [showXAxisLabel]="false" [yAxis]="true" [trimXAxisTicks]="true"
@@ -45,7 +45,7 @@
                 </div>
             </div>
             <div class="clr-col-2">
-                <div class="chart-container">
+                <div class="chart-container" *ngIf="formData.TeamManager.length > 0; else noManagerData">
                     <div class="chart-wrapper">
                         <ngx-charts-bar-vertical [results]="formData.TeamManager" [xAxis]="true" [barPadding]="4"
                             [showYAxisLabel]="false" [showXAxisLabel]="false" [yAxis]="true" [trimXAxisTicks]="true"
@@ -62,7 +62,7 @@
                 </div>
             </div>
             <div class="clr-col-2">
-                <div class="chart-container">
+                <div class="chart-container" *ngIf="formData.SocialLeader.length > 0; else noSocialLeaderData">
                     <div class="chart-wrapper">
                         <ngx-charts-bar-vertical [results]="formData.SocialLeader" [xAxis]="true" [barPadding]="4"
                         [showYAxisLabel]="false" [showXAxisLabel]="false" [yAxis]="true" [trimXAxisTicks]="true"
@@ -75,12 +75,47 @@
                             <span>Shows the answers towards the apperance of a Social Leader.</span>
                         </clr-tooltip-content>
                     </clr-tooltip>
-
                 </div>
-            </div>
-          
-            
             </div>
         </div>
     </div>
+</div>
 
+<ng-template #noNamesData>
+    <app-no-data
+    [captionTooltip]="'Team Names'" 
+    [captionText]="'The Name of Teams participating'">
+    </app-no-data>
+</ng-template>
+<ng-template #noPeopleData>
+    <app-no-data
+    [captionTooltip]="'Average Team size'"
+    [captionText]="'The Number of People'">
+    </app-no-data>
+</ng-template>
+<ng-template #noResourcesData>
+    <app-no-data
+    [captionText]="'Resources URL'"
+    [captionTooltip]="'Shows the provided URL.'" >
+    </app-no-data>
+</ng-template>
+<ng-template #noLeaderData>
+    <app-no-data
+    [captionText]="'Team Leader'"
+    [captionTooltip]="'Shows the answers towards the apperance of a Team Leader.'">
+    </app-no-data>
+</ng-template>
+<ng-template #noManagerData>
+    <app-no-data
+    [captionText]="'Team Manager'"
+    [captionTooltip]="'Shows the answers towards the apperance of a Team Manager.'"
+    [tooltipLeft]="true">
+    </app-no-data>
+</ng-template>
+<ng-template #noSocialLeaderData>
+    <app-no-data
+    [captionText]="'Social Leader'"
+    [captionTooltip]="'Shows the answers towards the apperance of a Social Leader.'"
+    [tooltipLeft]="true">
+    </app-no-data>
+</ng-template>

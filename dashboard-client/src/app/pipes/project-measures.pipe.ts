@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { ProjectMeasures } from 'src/models/interfaces/ProjectMeasures';
 import { average } from 'src/app/shared/average';
 import { standardDeviation } from '../shared/standardDeviation';
+import { isNotNullArray } from '../shared/nullCheckList';
 
 @Pipe({
   name: 'projectMeasuresPipe'
@@ -14,10 +15,10 @@ export class ProjectMeasuresPipe implements PipeTransform {
     let  helpSdList: any[] = [];
 
     for(let firstSet of Object.entries(multipleLikertQuestions)){
-      for(const secondSet of Object.entries(firstSet[1])){
-        if ((secondSet[1] as []).length !== 0 && (secondSet[1] as any[])[0] !== null){
-          helpAverageList.push(average(secondSet[1]));
-          helpSdList.push(standardDeviation(secondSet[1]));
+      for(const secondSet of Object.entries(firstSet[1]) as any[]){
+        if ((secondSet[1] as []).length !== 0 && isNotNullArray(secondSet[1])){
+          helpAverageList.push(average(secondSet[1].filter((value:any) => value !== null)));
+          helpSdList.push(standardDeviation(secondSet[1].filter((value:any) => value !== null)));
         }
       }
       if (helpAverageList.length !== 0) {
@@ -26,7 +27,7 @@ export class ProjectMeasuresPipe implements PipeTransform {
           sd: Math.round((average(helpSdList) + Number.EPSILON) * 100) / 100
         };
       } else {
-        calculatedInput[firstSet[0]] = null;
+        calculatedInput[firstSet[0]] = [];
       }
       helpAverageList = [];
       helpSdList = [];

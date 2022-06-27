@@ -8,7 +8,7 @@
     <div class="card-body">
         <div class="clr-row">
             <div class="clr-col-3">
-                <app-basic-score-display 
+                <app-basic-score-display *ngIf="formData.SatisfactionWithOutcome.length !== 0; else noSatisfactionData"
                     [bestPossibleNumber]="5" 
                     [scoreNumber]="formData.SatisfactionWithOutcome.avg" 
                     [sd]="formData.SatisfactionWithOutcome.sd"
@@ -17,7 +17,7 @@
                 </app-basic-score-display>
             </div>
             <div class="clr-col-3">
-                <app-basic-score-display *ngIf="formData.PerceivedUsefulness !== null; else noDataToDisplay"
+                <app-basic-score-display *ngIf="formData.PerceivedUsefulness.length !== 0; else noUsefulnessData"
                     [bestPossibleNumber]="5" 
                     [scoreNumber]="formData.PerceivedUsefulness.avg" 
                     [sd]="formData.PerceivedUsefulness.sd"
@@ -26,7 +26,7 @@
                 </app-basic-score-display>
             </div>
             <div class="clr-col-3">
-                <app-basic-score-display *ngIf="formData.ContinuationIntentions !== null; else noDataToDisplay"
+                <app-basic-score-display *ngIf="formData.ContinuationIntentions.length !== 0; else noContinuationData"
                     [bestPossibleNumber]="5" 
                     [scoreNumber]="formData.ContinuationIntentions.avg" 
                     [sd]="formData.ContinuationIntentions.sd"
@@ -35,7 +35,7 @@
                 </app-basic-score-display>
             </div>
             <div class="clr-col-3">
-                <app-basic-score-display *ngIf="formData.BehavioralControl !== null; else noDataToDisplay"
+                <app-basic-score-display *ngIf="formData.BehavioralControl.length !== 0; else noBehavioralData"
                     [bestPossibleNumber]="5" 
                     [scoreNumber]="formData.BehavioralControl.avg" 
                     [sd]="formData.BehavioralControl.sd"
@@ -48,10 +48,28 @@
     </div>
 </div>
 
-<ng-template #noDataToDisplay>
-    <div class="no-data-wrapper">
-        <h4 style="margin: 0;">
-            This section was not part of the survey.
-        </h4>
-    </div>
+<ng-template #noSatisfactionData>
+    <app-no-data
+        [captionText]="'Satisfaction with outcome'"
+        [captionTooltip]="'Shows the aggregated satisfaction with the project of the particular team. (1-5)'">
+    </app-no-data>
+</ng-template>
+<ng-template #noUsefulnessData>
+    <app-no-data 
+        [captionText]="'Precieved usefulness'"
+        [captionTooltip]="'Shows the aggregated precieved usefuless of the project of the particular team. (1-5)'">
+    </app-no-data>
+</ng-template>
+<ng-template #noContinuationData>
+    <app-no-data 
+        [captionText]="'Continuation intentions'"
+        [captionTooltip]="'Shows the aggregated future intentions in relation to the project of the particular team. (1-5)'">
+    </app-no-data>
+</ng-template>
+<ng-template #noBehavioralData>
+    <app-no-data
+        [captionText]="'Behavioral control'"
+        [captionTooltip]="'Shows the aggregated ability to continue to work on the project of the particular team. (1-5)'"
+        [tooltipLeft]="true">
+    </app-no-data>
 </ng-template>

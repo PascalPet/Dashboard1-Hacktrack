@@ -8,7 +8,7 @@
   <div class="card-body">
     <div class="clr-row">
       <div class="clr-col-4">
-        <div class="chart-container">
+        <div class="chart-container" *ngIf="formData.SatisfactionInput.length > 0; else noOverallExperienceData">
           <div class="polar-chart-wrapper">
             <ngx-charts-bar-horizontal-normalized
               [legend]="overall_legend"
@@ -18,7 +18,7 @@
               [yAxis]="overall_showYAxis"
               [legend]="overall_showLegend"
               [showXAxisLabel]="overall_showXAxisLabel"
-              [showYAxisLabel]="overall_showYAxisLabel"
+              [showYAxisLabel]="false"
               [xAxisLabel]="overall_xAxisLabel"
               [yAxisLabel]="overall_yAxisLabel">
             </ngx-charts-bar-horizontal-normalized>
@@ -31,14 +31,14 @@
         </div>
       </div>
       <div class="clr-col-5 flex-display">
-        <div class="chart-container" >
+        <div class="chart-container" *ngIf="formData.SessionInput.length > 0; else noSocialData">
           <div class="polar-chart-wrapper">
             <ngx-charts-polar-chart
               appPolarChartMarginRemoval
               [legend]="polar_legend"
               [legendTitle]="polar_legendTitle"
               [scheme]="'natural'"
-              [showXAxisLabel]="polar_showXAxisLabel"
+              [showXAxisLabel]="false"
               [showYAxisLabel]="polar_showYAxisLabel"
               [xAxis]="polar_xAxis"
               [yAxis]="polar_yAxis"
@@ -53,7 +53,7 @@
         </div>
       </div>
       <div class="clr-col-3 flex-display">
-          <div class="chart-container" >
+          <div class="chart-container" *ngIf="formData.FutureInput.length > 0; else noParticipationData">
             <div class="chart-wrapper">
               <ngx-charts-pie-chart
                 appChartMarginRemoval
@@ -67,7 +67,7 @@
               </ngx-charts-pie-chart>
             </div>
             <clr-tooltip><h6 class="description" clrTooltipTrigger>Future Participation Intentions</h6>
-              <clr-tooltip-content clrPosition="top-right" clrSize="lg" *clrIfOpen>
+              <clr-tooltip-content clrPosition="top-left" clrSize="lg" *clrIfOpen>
                 <span>Shows weather a participant plans to participate in a similar event in the future or not.</span>
               </clr-tooltip-content>
             </clr-tooltip>
@@ -76,3 +76,23 @@
     </div>
   </div>
 </div>
+
+<ng-template #noOverallExperienceData>
+  <app-no-data
+  [captionTooltip]="'Shows the OVERALL EXPERIENCE of people participating in this hackathon.'" 
+  [captionText]="'Overall Experience'">
+  </app-no-data>
+</ng-template>
+<ng-template #noSocialData>
+  <app-no-data
+  [captionTooltip]="'Shows the rating about how satisfied, useful and helpful in the following sessions.'"
+  [captionText]="'Rating about Satisfaction, Usefulness and Helpfulness'">
+  </app-no-data>
+</ng-template>
+<ng-template #noParticipationData>
+  <app-no-data
+  [captionTooltip]="'Shows weather a participant plans to participate in a similar event in the future or not.'"
+  [captionText]="'Future Participation Intentions'"
+  [tooltipLeft]="true">
+  </app-no-data>
+</ng-template>

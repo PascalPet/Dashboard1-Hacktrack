@@ -8,10 +8,14 @@
     <div class="card-body">
         <div class="clr-row">
             <div class="clr-col-2">
-                <app-long-answers-list [captionTooltip]="'Shows the list of factors that participants would like their mentor to improve.'" [answerList]="formData.improvement" [captionText]="'Opportunities for Improvement'"></app-long-answers-list>
+                <app-long-answers-list *ngIf="formData.improvement.length > 0; else noImprovementData"
+                    [captionTooltip]="'Shows the list of factors that participants would like their mentor to improve.'"
+                    [answerList]="formData.improvement"
+                    [captionText]="'Opportunities for Improvement'">
+                </app-long-answers-list>
             </div>
             <div class="clr-col-10">
-                <div class="chart-container">
+                <div class="chart-container" *ngIf="formData.percievedSupport.length > 0; else noSupportData">
                     <div class="chart-wrapper">
                         <ngx-charts-bar-horizontal 
                         [results]="formData.percievedSupport"
@@ -19,7 +23,8 @@
                         [barPadding]="2"
                         [xScaleMax]="5"
                         [xScaleMin]="1"
-                        [showYAxisLabel]="true"
+                        [showYAxisLabel]="false"
+                        [showXAxisLabel]="false"
                         [yAxis]="true"
                         [trimYAxisTicks]="false"
                         [scheme]="'natural'">
@@ -35,3 +40,17 @@
         </div>
     </div>
 </div>
+
+<ng-template #noImprovementData>
+    <app-no-data
+    [captionTooltip]="'Shows the list of factors that participants would like their mentor to improve.'"
+    [captionText]="'Opportunities for Improvement'">
+    </app-no-data>
+</ng-template>
+<ng-template #noSupportData>
+    <app-no-data
+    [captionText]="'Percieved Support of mentors'"
+    [captionTooltip]="'Shows the average approval towards each statement by the participants.'"
+    [tooltipLeft]="true">
+    </app-no-data>
+</ng-template>

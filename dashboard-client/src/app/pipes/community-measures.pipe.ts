@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { first } from 'rxjs';
 import { CommunityMeasures } from "../../models/interfaces/CommunityMeasures";
 import { average } from '../shared/average';
+import { isNotNullArray } from '../shared/nullCheckList';
 import { standardDeviation } from '../shared/standardDeviation';
 
 @Pipe({
@@ -36,56 +37,24 @@ export class CommunityMeasuresPipe implements PipeTransform {
     ];
 
     let CommunityInput = {
-      CommunityData,
-      SocialData
+      CommunityData: [] as any[],
+      SocialData: [] as any[]
     }
 
-    // for(let firstSet of Object.entries(communityMeasures.CommunityIdentification)){
-    //     if (firstSet[1].length !== 0){
-    //       helpAverageList.push(average(firstSet[1]));
-    //     } else {
-    //       helpAverageList.push(0)
-    //     }
-    // }
-    // for(let count of helpAverageList){
-    //   CommunityData[count].value += CommunityData[count].value + helpAverageList[count]
-    // }
-    //
-    // for(let firstSet of Object.entries(communityMeasures.SocialCapital)){
-    //   if (firstSet[1].length !== 0){
-    //     helpAverageList.push(average(firstSet[1]));
-    //   } else {
-    //     helpAverageList.push(0)
-    //   }
-    // }
-    // for(let count of helpAverageList){
-    //   SocialData[count].value += SocialData[count].value + helpAverageList[count]
-    // }
-
     for(let entry of Object.entries(communityMeasures.CommunityIdentification)) {
-      if ((entry[1] as []).length != 0) {
+      if ((entry[1] as []).length && isNotNullArray(entry[1])) {
         CommunityInput.CommunityData.push({
           "name": entry[0],
           "value": average(entry[1]) + 1
-        });
-      } else {
-        CommunityInput.SocialData.push({
-          "name": entry[0],
-          "value": 0
         });
       }
     }
 
     for(let entry of Object.entries(communityMeasures.SocialCapital)) {
-      if ((entry[1] as []).length != 0) {
+      if ((entry[1] as []).length != 0 && isNotNullArray(entry[1])) {
         CommunityInput.SocialData.push({
           "name": entry[0],
           "value": average(entry[1]) + 1
-        });
-      } else {
-        CommunityInput.SocialData.push({
-          "name": entry[0],
-          "value": 0
         });
       }
     }

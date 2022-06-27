@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { userAnswers } from 'src/services/data';
 import { ResponseService } from 'src/services/ResponseService';
 import { FormService } from '../form.service';
 import { widegts } from '../widget-size';
@@ -12,6 +13,10 @@ export class ShellComponent implements OnInit {
   responseService = new ResponseService();
   formData = {};
   formResponses = {};
+  uuid = '';
+  loadingData = false;
+  error = false;
+  initialState = true;
 
   distribution = {
     first: widegts.demographics,
@@ -22,19 +27,30 @@ export class ShellComponent implements OnInit {
   constructor(private formService: FormService) { }
 
   ngOnInit(): void {
-    this.responseService.parseUser();
-    console.log(this.responseService);
+    
+  }
+
+  getFormData() {
+    this.error = false;
+    if (this.uuid.length > 0) {
+      this.initialState = false;
+      this.loadingData = true;
+      this.formService.getFormResponses(this.uuid).subscribe(response => {
+        if (Object.keys(response).length === 0) {
+          this.error = true;
+        } else {
+          this.responseService = new ResponseService();
+          this.responseService.parseUser(response);
+          this.loadingData = false;
+        }
+        this.responseService.parseUser(userAnswers);
+      }, error => {
+        this.error = true;
+      });
+    }
   }
 
   public get widgets(): typeof widegts {
     return widegts; 
   }
-
-  test(): void{
-  //  this.appService.getForm().subscribe((json: any) => {
-  //    this.dataShell = json;
-  //     return json;
-  //   })
-}
-
 }

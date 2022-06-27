@@ -1,6 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { IndividualMeasures } from 'src/models/interfaces/IndividualMeasures';
 import { average } from '../shared/average';
+import { isNotNullArray } from '../shared/nullCheckList';
 
 @Pipe({
   name: 'individualMeasuresPipe'
@@ -10,25 +11,32 @@ export class IndividualMeasuresPipe implements PipeTransform {
   transform(individualMeasures: IndividualMeasures): any {
     
     let calculatedInputs = {
-      participations: 0,
+      participations: 0 as number | null,
       otherMotivations: [] as any[],
       motivationDistribution: [] as any[]
     }
     
     //Fill participations
-    calculatedInputs.participations = Math.round(average(individualMeasures.EventParticipation.filter(value => !isNaN(value))));
+    if (individualMeasures.EventParticipation.filter(value => !isNaN(value) && value !== null).length > 0) {
+      calculatedInputs.participations = Math.round(average(individualMeasures.EventParticipation.filter(value => !isNaN(value) && value !== null)));
+    } else {
+      calculatedInputs.participations = null;
+    }
 
     //Fill motivation distribution
+    let nullChecker = false;
     for (let entry of Object.entries(individualMeasures.Motivation)) {
-      calculatedInputs.motivationDistribution.push(
-      {
-        "name": entry[0],
-        "value": average(entry[1]) + 1
-      });
+      if (isNotNullArray(entry[1])) {
+        calculatedInputs.motivationDistribution.push(
+          {
+            "name": entry[0],
+            "value": average(entry[1].filter(value => value !== null)) + 1
+          });
+      }
     }
 
     //Fill other motivations
-    this.count(individualMeasures.MotivationOther.filter(text => text !== undefined), calculatedInputs.otherMotivations);
+    this.count(individualMeasures.MotivationOther.filter(text => text !== null && text !== undefined), calculatedInputs.otherMotivations);
 
     return calculatedInputs;
   }

@@ -8,13 +8,20 @@
     <div class="card-body">
         <div class="clr-row">
             <div class="clr-col-2">
-                <app-basic-score-display [captionTooltip]="'Shows the average amount of participations in similar events before.'" [scoreNumber]="formData.participations" [captionText]="'Other Event Participations'"></app-basic-score-display>
+                <app-basic-score-display *ngIf="formData.participations !== null; else noParticipationData"
+                    [captionTooltip]="'Shows the average amount of participations in similar events before.'"
+                    [scoreNumber]="formData.participations"
+                    [captionText]="'Other Event Participations'">
+                </app-basic-score-display>
             </div>
             <div class="clr-col-2">
-                <app-open-answer-list [captionTooltip]="'Shows additionally reported motivations.'" [answerList]="formData.otherMotivations" [captionText]="'Other Motivations'"></app-open-answer-list>
+                <app-open-answer-list *ngIf="formData.otherMotivations.length > 0; else noMotivationData"
+                    [captionTooltip]="'Shows additionally reported motivations.'" 
+                    [answerList]="formData.otherMotivations" 
+                    [captionText]="'Other Motivations'"></app-open-answer-list>
             </div>
             <div class="clr-col-8">
-                <div class="chart-container">
+                <div class="chart-container" *ngIf="formData.motivationDistribution.length > 0; else noDistributionData">
                     <div class="chart-wrapper">
                         <ngx-charts-bar-horizontal
                         [results]="formData.motivationDistribution"
@@ -22,7 +29,7 @@
                         [barPadding]="2"
                         [xScaleMax]="5"
                         [xScaleMin]="1"
-                        [showYAxisLabel]="true"
+                        [showYAxisLabel]="false"
                         [yAxis]="true"
                         [trimYAxisTicks]="false"
                         [scheme]="'natural'">
@@ -38,3 +45,23 @@
         </div>
     </div>
 </div>
+
+<ng-template #noParticipationData>
+    <app-no-data
+    [captionTooltip]="'Shows the average amount of participations in similar events before.'" 
+    [captionText]="'Other Event Participations'">
+    </app-no-data>
+</ng-template>
+<ng-template #noMotivationData>
+    <app-no-data
+    [captionTooltip]="'Shows additionally reported motivations.'" 
+    [captionText]="'Other Motivations'">
+    </app-no-data>
+</ng-template>
+<ng-template #noDistributionData>
+    <app-no-data
+    [captionText]="'Motivation Distribution'"
+    [captionTooltip]="'Shows the average approval towards each statement by the participants.'"
+    [tooltipLeft]="true">
+    </app-no-data>
+</ng-template>

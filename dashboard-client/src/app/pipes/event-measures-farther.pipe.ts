@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { first } from 'rxjs';
 import { EventMeasures } from "../../models/interfaces/EventMeasures";
 import { average } from '../shared/average';
+import { isNotNullArray } from '../shared/nullCheckList';
 import { standardDeviation } from '../shared/standardDeviation';
 
 @Pipe({
@@ -12,46 +13,22 @@ export class EventMeasuresFartherPipe implements PipeTransform {
   transform(eventFartherMeasures: EventMeasures): any {
 
     let eventFartherInput = {
-      RecommendationInput: Math.round(average(eventFartherMeasures.RecommendationLikelyness.filter(value => !isNaN(value)))),
+      RecommendationInput: 0 as number | null,
       goodInput: [] as any[],
       improveInput: [] as any[],
       openInput: [] as any[]
     };
 
-    eventFartherInput.goodInput = eventFartherMeasures.GoodEvent;
-    eventFartherInput.improveInput = eventFartherMeasures.ImproveEvent;
-    eventFartherInput.openInput = eventFartherMeasures.OpenSharing;
+    if (isNotNullArray(eventFartherMeasures.RecommendationLikelyness) && eventFartherMeasures.RecommendationLikelyness.filter(value => !isNaN(value)).length > 0) {
+      eventFartherInput.RecommendationInput = Math.round(average(eventFartherMeasures.RecommendationLikelyness.filter(value => !isNaN(value))));
+    } else {
+      eventFartherInput.RecommendationInput = null;
+    }
 
-    console.log(eventFartherInput);
+    if (isNotNullArray(eventFartherMeasures.GoodEvent) && eventFartherMeasures.GoodEvent.filter(value => value !== undefined).length > 0) eventFartherInput.goodInput = eventFartherMeasures.GoodEvent.filter(value => value !== undefined);
+    if (isNotNullArray(eventFartherMeasures.ImproveEvent) && eventFartherMeasures.ImproveEvent.filter(value => value !== undefined).length > 0) eventFartherInput.improveInput = eventFartherMeasures.ImproveEvent.filter(value => value !== undefined);
+    if (isNotNullArray(eventFartherMeasures.OpenSharing) && eventFartherMeasures.OpenSharing.filter(value => value !== undefined).length > 0) eventFartherInput.openInput = eventFartherMeasures.OpenSharing.filter(value => value !== undefined);
 
     return eventFartherInput;
   };
-
-  count(array: string[], target: any) {
-    array.sort();
-
-    var current = null;
-    var cnt = 0;
-    for (var i = 0; i < array.length; i++) {
-      if (array[i] != current) {
-        if (cnt > 0) {
-          target.push({
-            "text": current,
-            "amount": cnt
-          });
-        }
-        current = array[i];
-        cnt = 1;
-      } else {
-        cnt++;
-      }
-    }
-    if (cnt > 0) {
-      target.push({
-        "text": current,
-        "amount": cnt
-      });
-    }
-  }
-
 }

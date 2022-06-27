@@ -8,14 +8,14 @@
     <div class="card-body">
         <div class="clr-row">
             <div class="clr-col-2">
-                <app-basic-score-display 
+                <app-basic-score-display *ngIf="formData.years !== null; else noYearsData"
                     [captionTooltip]="'Shows the average amount of programming experience in years.'" 
                     [scoreNumber]="formData.years" 
                     [captionText]="'Years of Programming experience'">
                 </app-basic-score-display>
             </div>
             <div class="clr-col-2">
-                <div class="chart-container">
+                <div *ngIf="formData.comparedExperience.length !== 0; else noComparedExperienceData" class="chart-container">
                     <div class="outer-chart-wrapper">
                         <div class="chart-wrapper">
                             <ngx-charts-pie-chart
@@ -37,14 +37,14 @@
                 </div>
             </div>
             <div class="clr-col-4">
-                <app-comparison-average-sd-list
+                <app-comparison-average-sd-list *ngIf="formData.ability.length > 0; else noAbilityData"
                     [answerList]="formData.ability"
                     [captionText]="'Percieved ABILITY at language'"
                     [captionTooltip]="'Shows the average reported ability in the specific language.'">
                 </app-comparison-average-sd-list>
             </div>
             <div class="clr-col-4">
-                <app-comparison-average-sd-list
+                <app-comparison-average-sd-list *ngIf="formData.comfort.length > 0; else noComfortData"
                     [answerList]="formData.comfort"
                     [captionText]="'Percieved COMFORT at language'"
                     [captionTooltip]="'Shows the average reported comfort in using the specific language.'"
@@ -54,3 +54,29 @@
         </div>
     </div>
 </div>
+
+<ng-template #noYearsData>
+    <app-no-data
+    [captionTooltip]="'Shows the average amount of programming experience in years.'" 
+    [captionText]="'Years of Programming experience'">
+    </app-no-data>
+</ng-template>
+<ng-template #noComparedExperienceData>
+    <app-no-data
+    [captionTooltip]="'Shows the reported experience level of the participants in comparison to others as amount of calls.'"
+    [captionText]="'Compared Programming experience'">
+    </app-no-data>
+</ng-template>
+<ng-template #noAbilityData>
+    <app-no-data
+    [captionText]="'Percieved ABILITY at language'"
+    [captionTooltip]="'Shows the average reported ability in the specific language.'">
+    </app-no-data>
+</ng-template>
+<ng-template #noComfortData>
+    <app-no-data
+    [captionText]="'Percieved COMFORT at language'"
+    [captionTooltip]="'Shows the average reported comfort in using the specific language.'"
+    [tooltipLeft]="true">
+    </app-no-data>
+</ng-template>
