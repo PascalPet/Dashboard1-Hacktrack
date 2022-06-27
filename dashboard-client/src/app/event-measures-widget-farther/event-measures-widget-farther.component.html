@@ -8,17 +8,60 @@
   <div class="card-body">
     <div class="clr-row">
       <div class="clr-col-3">
-        <app-basic-score-display [captionTooltip]="'Shows the Likeliness of Recommending a similar hackathon to a friend.'" [scoreNumber]="formData.RecommendationInput" [bestPossibleNumber]="10" [captionText]="'Recommendation Likeliness'"></app-basic-score-display>
+        <app-basic-score-display *ngIf="formData.RecommendationInput !== null; else noLikelinessData"
+          [captionTooltip]="'Shows the Likeliness of Recommending a similar hackathon to a friend.'" 
+          [scoreNumber]="formData.RecommendationInput" 
+          [bestPossibleNumber]="10" 
+          [captionText]="'Recommendation Likeliness'">
+        </app-basic-score-display>
       </div>
       <div class="clr-col-3">
-        <app-long-answers-list [captionTooltip]="'Shows what people think was good about a event.'" [answerList]="formData.goodInput" [captionText]="'Positive Event Experiences'"></app-long-answers-list>
+        <app-long-answers-list *ngIf="formData.goodInput.length > 0; else noExperienceData"
+          [captionTooltip]="'Shows what people think was good about a event.'" 
+          [answerList]="formData.goodInput" 
+          [captionText]="'Positive Event Experiences'">
+        </app-long-answers-list>
       </div>
       <div class="clr-col-3">
-        <app-long-answers-list [captionTooltip]="'Shows what people think that could be improved as recommendations.'" [answerList]="formData.ImproveEvent" [captionText]="'Recommendations for Improvement'"></app-long-answers-list>
+        <app-long-answers-list *ngIf="formData.improveInput.length > 0; else noImprovementData"
+          [captionTooltip]="'Shows what people think that could be improved as recommendations.'" 
+          [answerList]="formData.improveInput" 
+          [captionText]="'Recommendations for Improvement'">
+        </app-long-answers-list>
       </div>
       <div class="clr-col-3">
-        <app-long-answers-list [captionTooltip]="'Shows what people also want to share with you.'" [answerList]="formData.OpenSharing" [captionText]="'Open Shared Recommendations'"></app-long-answers-list>
+        <app-long-answers-list *ngIf="formData.openInput.length > 0; else noSharedData"
+          [captionTooltip]="'Shows what people also want to share with you.'" 
+          [answerList]="formData.openInput" 
+          [captionText]="'Open Shared Recommendations'">
+        </app-long-answers-list>
       </div>
     </div>
   </div>
 </div>
+
+<ng-template #noLikelinessData>
+  <app-no-data
+  [captionTooltip]="'Shows the Likeliness of Recommending a similar hackathon to a friend.'" 
+  [captionText]="'Recommendation Likeliness'">
+  </app-no-data>
+</ng-template>
+<ng-template #noExperienceData>
+  <app-no-data
+  [captionTooltip]="'Shows what people think was good about a event.'" 
+  [captionText]="'Positive Event Experiences'">
+  </app-no-data>
+</ng-template>
+<ng-template #noImprovementData>
+  <app-no-data
+  [captionTooltip]="'Shows what people think that could be improved as recommendations.'" 
+  [captionText]="'Recommendations for Improvement'">
+  </app-no-data>
+</ng-template>
+<ng-template #noSharedData>
+  <app-no-data
+  [captionTooltip]="'Shows what people also want to share with you.'"
+  [captionText]="'Open Shared Recommendations'"
+  [tooltipLeft]="true">
+  </app-no-data>
+</ng-template>

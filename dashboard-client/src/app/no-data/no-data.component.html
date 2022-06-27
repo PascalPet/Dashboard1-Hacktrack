@@ -1,6 +1,8 @@
-<div class="container">
-    <div class="listWrapper">
-        <span *ngFor="let answer of answerList" class="label"><div title="{{answer.text}}">{{answer.text}}</div><span class="badge badge-1">{{answer.amount}}</span></span>
+<div class="container-object">
+    <div class="number-wrapper">
+        <h5>
+            There is no data to show ...
+        </h5>
     </div>
     <clr-tooltip><h6 class="description" clrTooltipTrigger>{{captionText}}</h6>
         <clr-tooltip-content clrPosition="{{tooltipLeft ? 'top-left' : 'top-right'}}" clrSize="lg" *clrIfOpen>

@@ -198,8 +198,8 @@ export class ResponseService {
         return userAnswer?.answers[id]?.textAnswers?.answers[0]?.value;
     }
 
-     parseUser(): void {
-        userAnswers.responses.forEach(userAnswer => {
+     parseUser(userAnswers: any): void {
+        userAnswers.responses.forEach((userAnswer:any) => {
             this.insertIndividualMeasures(userAnswer);
             this.insertTeamProcess(userAnswer);
             this.insertProjectMeasures(userAnswer);

@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { fivePointLikertScale } from 'src/models/enums/FivePointLikertScale';
 import { TeamProcess } from 'src/models/interfaces/TeamProcess';
 import { average } from '../shared/average';
+import { isNotNullArray } from '../shared/nullCheckList';
 @Pipe({
   name: 'teamProcessPipe'
 })
@@ -35,17 +36,33 @@ export class TeamProcessPipe implements PipeTransform {
       },
     ];
 
-  for(let entry of teamProcess.SatisfactionWithProcess.Effiency) {
-    SatisfactionWithProcess[0].series[this.parseLikertData(entry)].value = SatisfactionWithProcess[0].series[this.parseLikertData(entry)].value + 1;
+  if (isNotNullArray(teamProcess.SatisfactionWithProcess.Effiency)) {
+    for(let entry of teamProcess.SatisfactionWithProcess.Effiency) {
+      if (entry !== null) SatisfactionWithProcess[0].series[this.parseLikertData(entry)].value = SatisfactionWithProcess[0].series[this.parseLikertData(entry)].value + 1;
+    }
+  } else {
+    SatisfactionWithProcess.splice(SatisfactionWithProcess.findIndex(value => value.name === 'Efficiency'), 1)
   }
-  for(let entry of teamProcess.SatisfactionWithProcess.Coordination) {
-    SatisfactionWithProcess[1].series[this.parseLikertData(entry)].value = SatisfactionWithProcess[1].series[this.parseLikertData(entry)].value + 1;
+  if (isNotNullArray(teamProcess.SatisfactionWithProcess.Coordination)) {
+    for(let entry of teamProcess.SatisfactionWithProcess.Coordination) {
+      if (entry !== null)SatisfactionWithProcess[1].series[this.parseLikertData(entry)].value = SatisfactionWithProcess[1].series[this.parseLikertData(entry)].value + 1;
+    }
+  } else {
+    SatisfactionWithProcess.splice(SatisfactionWithProcess.findIndex(value => value.name === 'Coordination'), 1)
   }
-  for(let entry of teamProcess.SatisfactionWithProcess.Fairness) {
-    SatisfactionWithProcess[2].series[this.parseLikertData(entry)].value = SatisfactionWithProcess[2].series[this.parseLikertData(entry)].value + 1;
+  if (isNotNullArray(teamProcess.SatisfactionWithProcess.Fairness)) {
+    for(let entry of teamProcess.SatisfactionWithProcess.Fairness) {
+      if (entry !== null) SatisfactionWithProcess[2].series[this.parseLikertData(entry)].value = SatisfactionWithProcess[2].series[this.parseLikertData(entry)].value + 1;
+    }
+  } else {
+    SatisfactionWithProcess.splice(SatisfactionWithProcess.findIndex(value => value.name === 'Fairness'), 1)
   }
-  for(let entry of teamProcess.SatisfactionWithProcess.Understanding) {
-    SatisfactionWithProcess[3].series[this.parseLikertData(entry)].value = SatisfactionWithProcess[3].series[this.parseLikertData(entry)].value + 1;
+  if (isNotNullArray(teamProcess.SatisfactionWithProcess.Understanding)) {
+    for(let entry of teamProcess.SatisfactionWithProcess.Understanding) {
+      if (entry !== null) SatisfactionWithProcess[3].series[this.parseLikertData(entry)].value = SatisfactionWithProcess[3].series[this.parseLikertData(entry)].value + 1;
+    }
+  } else {
+    SatisfactionWithProcess.splice(SatisfactionWithProcess.findIndex(value => value.name === 'Understanding'), 1)
   }
   
   let calculatedInput = {
@@ -56,10 +73,12 @@ export class TeamProcessPipe implements PipeTransform {
   //Fill percieved Support
   for(let entry of Object.entries(teamProcess.Voice)) {
     if ((entry[1] as []).length > 0) {
-      calculatedInput.voiceChartData.push({
-        "name": entry[0],
-        "value": average(entry[1]) + 1
-      });
+      if (isNotNullArray(entry[1])) {
+        calculatedInput.voiceChartData.push({
+          "name": entry[0],
+          "value": average(entry[1].filter(value => value !== null)) + 1
+        });
+      }
     }
   }
 

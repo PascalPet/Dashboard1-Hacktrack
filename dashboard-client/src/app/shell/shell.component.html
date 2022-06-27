@@ -2,15 +2,22 @@
     <header class="header 6">
         <div class="branding"><div class="title">Dashathon</div></div>
         <div class="header-actions">
-<!--            <a [routerLink] class="nav-link nav-icon" aria-label="settings">-->
-              <cds-icon shape="cog"></cds-icon>
-<!--            </a>-->
+            <div class="form-container">
+                <div class="text-wrapper">
+                    <h5>Uuid of the survey: </h5>
+                </div>
+                <clr-input-container>
+                    <input clrInput type="text" placeholder="uuid ..." [(ngModel)]="uuid" id="uuidInput" />
+                </clr-input-container>
+                <div class="btn-wrapper">
+                    <button (click)="getFormData()" class="btn btn-icon" [disabled]="uuid === ''"><cds-icon shape="refresh"></cds-icon></button>
+                </div>
+            </div>
         </div>
     </header>
 
     <div class="content-container">
-<!-- Updated upstream -->
-        <div class="content-area wrapper" style="padding: .6rem">
+        <div *ngIf="!initialState && !loadingData; else initialStateTemplate" class="content-area wrapper" style="padding: .6rem">
             <div class="clr-row">
                 <div class="clr-col-1 button-list">
                     <button (click)="distribution.first = widgets.teamProcess"
@@ -86,3 +93,51 @@
         </div>
     </div>
 </div>
+
+<ng-template #initialStateTemplate>
+    <div *ngIf="!loadingData; else loading" class="content-area">
+        <div class="spinner-wrapper-outer">
+            <div class="spinner-wrapper-inner">
+                <h3>
+                    Enter the Uuid of the survey on the top right corner of your screen!
+                </h3>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #loading>
+    <div *ngIf="!error; else errorMessage" class="content-area">
+        <div class="spinner-wrapper-outer">
+            <div class="spinner-wrapper-inner">
+                <div class="spinner">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #errorMessage>
+    <div class="content-area">
+        <div class="spinner-wrapper-outer">
+            <div class="spinner-wrapper-inner">
+                <div class="alert alert-danger" role="alert">
+                    <div class="alert-items">
+                        <div class="alert-item static">
+                            <div class="alert-icon-wrapper">
+                                <cds-icon class="alert-icon" shape="exclamation-circle"></cds-icon>
+                            </div>
+                            <span class="alert-text">
+                                <h3>
+                                    We are sorry, we could not find the requested Survey-data for your provided ID.
+                                    Please check your internet connection or the ID you entered.
+                                </h3>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
