@@ -14,7 +14,7 @@
               [legend]="overall_legend"
               [legendTitle]="overall_legendTitle"
               [results]="formData.SatisfactionInput"
-              [scheme]="'natural'"
+              [scheme]="event_colorScheme"
               [yAxis]="overall_showYAxis"
               [legend]="overall_showLegend"
               [showXAxisLabel]="overall_showXAxisLabel"
@@ -37,7 +37,7 @@
               appPolarChartMarginRemoval
               [legend]="polar_legend"
               [legendTitle]="polar_legendTitle"
-              [scheme]="'natural'"
+              [scheme]="polar_colorScheme"
               [showXAxisLabel]="polar_showXAxisLabel"
               [showYAxisLabel]="polar_showYAxisLabel"
               [xAxis]="polar_xAxis"
@@ -59,7 +59,7 @@
                 appChartMarginRemoval
                 [legend]="true"
                 [legendTitle]="''"
-                [scheme]="'natural'"
+                [scheme]="event_colorScheme"
                 [results]="formData.FutureInput"
                 [doughnut]="true"
                 [arcWidth]="0.5"

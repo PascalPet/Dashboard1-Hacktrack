@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {LegendPosition} from "@swimlane/ngx-charts";
+import {LegendPosition, Color, ScaleType} from "@swimlane/ngx-charts";
 
 @Component({
   selector: 'app-event-measures-widget',
@@ -38,9 +38,21 @@ export class EventMeasuresWidgetComponent implements OnInit {
   polar_xAxisLabel: string = 'Year';
   polar_yAxisLabel: string = 'Population';
 
-  overall_colorScheme = {domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']};
-  polar_colorScheme = {domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']};
+  schemeType: string = 'linear';
 
+  event_colorScheme: Color = {
+    name: 'myScheme',
+    selectable: true,
+    group: ScaleType.Ordinal,
+    domain: ['#293462',  '#1829EE', '#7aa3e5','#EC9B3B', '#F7D716'],
+  };
+
+  polar_colorScheme: Color = {
+    name: 'myScheme',
+    selectable: true,
+    group: ScaleType.Ordinal,
+    domain: ['#9C0F48',  '#1829EE', '#F7D716'],
+  };
   below = LegendPosition.Below;
 
   @Input()
