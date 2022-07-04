@@ -29,8 +29,7 @@ export class TeamCompositionPipe implements PipeTransform {
       resourcesURL:[] as string[]
 };
   if (isNotNullArray(teamComposition.TeamSize) && teamComposition.TeamSize.filter(size => !isNaN(size)).length > 0) {
-    calculatedInputs.teamSize = average(teamComposition.TeamSize.filter(size => !isNaN(size)));
-    Math.round((average(teamComposition.TeamSize.filter(size => !isNaN(size) && size !== undefined && size !== null)) + 1 + Number.EPSILON) * 100) / 100
+    calculatedInputs.teamSize = Math.round((average(teamComposition.TeamSize.filter(size => !isNaN(size) && size !== undefined && size !== null)) + Number.EPSILON) * 100) / 100;
   } else {
     calculatedInputs.teamSize = null;
   }
