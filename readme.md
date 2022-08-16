@@ -84,3 +84,13 @@ Note that this Repository is only for developmental purposes and not intended to
     2.1 You can find all the Components provided by Clarity [here](https://clarity.design/angular-components/)
 
     2.2 If you want to use the Icons provided by Clarity, you will need to add them manually to the app.moudules.ts file (and Import them of course)!
+
+## Website is accessble statically from the Backend!
+
+You can access the Website directly via:
+
+```bash
+http://localhost:8080
+```
+
+This is the current state of the project like it would be served in a production setting.

@@ -3,6 +3,7 @@ import { userAnswers } from 'src/services/data';
 import { ResponseService } from 'src/services/ResponseService';
 import { FormService } from '../form.service';
 import { widegts } from '../widget-size';
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-shell',
@@ -24,10 +25,21 @@ export class ShellComponent implements OnInit {
     third: widegts.individualMeasures
   }
 
-  constructor(private formService: FormService) { }
+  constructor(private formService: FormService,
+              private route: ActivatedRoute,
+              public router: Router) { }
 
   ngOnInit(): void {
-    
+    this.route.params.subscribe(routeParams => {
+      this.uuid = routeParams['uuid'] ?? '';
+      if (this.uuid.length > 0) {
+        this.getFormData();
+      }
+    });
+  }
+
+  navigateToResults() {
+    this.router.navigate(['/' + this.uuid]);
   }
 
   getFormData() {
@@ -51,6 +63,6 @@ export class ShellComponent implements OnInit {
   }
 
   public get widgets(): typeof widegts {
-    return widegts; 
+    return widegts;
   }
 }

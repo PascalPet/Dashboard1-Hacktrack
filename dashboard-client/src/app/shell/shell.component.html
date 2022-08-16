@@ -2,17 +2,17 @@
     <header class="header 6">
         <div class="branding"><div class="title">Dashathon</div></div>
         <div class="header-actions">
-            <div class="form-container">
+            <form class="form-container">
                 <div class="text-wrapper">
                     <h5>Uuid of the survey: </h5>
                 </div>
                 <clr-input-container>
-                    <input clrInput type="text" placeholder="uuid ..." [(ngModel)]="uuid" id="uuidInput" />
+                    <input clrInput type="text" placeholder="uuid ..." [(ngModel)]="uuid" id="uuidInput" name="uuid" />
                 </clr-input-container>
                 <div class="btn-wrapper">
-                    <button (click)="getFormData()" class="btn btn-icon" [disabled]="uuid === ''"><cds-icon shape="refresh"></cds-icon></button>
+                    <button type="submit" [routerLink]="['/' + uuid]" class="btn btn-icon" [disabled]="uuid === ''"><cds-icon shape="refresh"></cds-icon></button>
                 </div>
-            </div>
+            </form>
         </div>
     </header>
 
@@ -85,11 +85,8 @@
                     [formData]="(responseService.eventMeasures|eventMeasuresPipe)" ></app-event-measures-widget>
                     <app-event-measures-widget-farther *ngIf="distribution.third === widgets.eventMeasures2"
                     [formData]="(responseService.eventMeasures|eventMeasuresFartherPipe)"></app-event-measures-widget-farther>
-<!--                    <app-polar-chart *ngIf="distribution.third === widgets.eventMeasures"></app-polar-chart>-->
-<!--                    <app-motivation-widget *ngIf="distribution.third === widgets.individualMeasures"></app-motivation-widget>-->
                 </div>
             </div>
-<!--          <div><app-polar-chart></app-polar-chart ></div>-->
         </div>
     </div>
 </div>

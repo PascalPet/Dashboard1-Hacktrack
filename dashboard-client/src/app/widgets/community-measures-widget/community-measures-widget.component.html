@@ -11,18 +11,17 @@
         <div class="chart-container" *ngIf="formData.CommunityData.length > 0; else noCommunityData">
           <div class="chart-wrapper">
             <ngx-charts-bar-horizontal
-              [legend]="community_legend"
               [legendTitle]="community_legendTitle"
               [scheme]="'natural'"
-              [yAxis]="community_showYAxis"
               [legend]="false"
               [results]="formData.CommunityData"
               [xAxis]="true"
               [barPadding]="2"
               [showYAxisLabel]="false"
               [yAxis]="true"
+              [xScaleMax]="4"
+              [xScaleMin]="0"
               [trimYAxisTicks]="false"
-              [scheme]="'natural'"
               [rotateXAxisTicks]="false"
               [trimXAxisTicks]="true"
               [maxXAxisTickLength]="7">
@@ -45,6 +44,8 @@
                 [barPadding]="2"
                 [showYAxisLabel]="false"
                 [yAxis]="true"
+                [xScaleMax]="4"
+                [xScaleMin]="0"
                 [trimYAxisTicks]="true"
                 [scheme]="'natural'"
                 [rotateXAxisTicks]="false"
