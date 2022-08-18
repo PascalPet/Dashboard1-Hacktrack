@@ -7,28 +7,14 @@
   </div>
   <div class="card-body">
     <div class="clr-row">
-      <div class="clr-col-4">
-        <div class="chart-container" *ngIf="formData.SatisfactionInput.length > 0; else noOverallExperienceData">
-          <div class="polar-chart-wrapper">
-            <ngx-charts-bar-horizontal-normalized
-              [legend]="overall_legend"
-              [legendTitle]="overall_legendTitle"
-              [results]="formData.SatisfactionInput"
-              [scheme]="'natural'"
-              [yAxis]="overall_showYAxis"
-              [legend]="overall_showLegend"
-              [showXAxisLabel]="overall_showXAxisLabel"
-              [showYAxisLabel]="false"
-              [xAxisLabel]="overall_xAxisLabel"
-              [yAxisLabel]="overall_yAxisLabel">
-            </ngx-charts-bar-horizontal-normalized>
-          </div>
-          <clr-tooltip><h6 class="description" clrTooltipTrigger>Overall Experience</h6>
-            <clr-tooltip-content clrPosition="top-right" clrSize="lg" *clrIfOpen>
-              <span>Shows the OVERALL EXPERIENCE of people participating in this hackathon.</span>
-            </clr-tooltip-content>
-          </clr-tooltip>
-        </div>
+      <div class="clr-col-2">
+        <app-basic-score-display *ngIf="formData.SatisfactionInput !== {}; else noSatisfactionData"
+          [scoreNumber]="formData.SatisfactionInput.avg"
+          [bestPossibleNumber]="5"
+          [sd]="formData.SatisfactionInput.sd"
+          [captionText]="'Satisfaction'"
+          [captionTooltip]="'Shows the overall experience of people participating in this hackathon. (1-5)'">
+        </app-basic-score-display>
       </div>
       <div class="clr-col-5 flex-display">
         <div class="chart-container" *ngIf="formData.SessionInput.length > 0; else noSocialData">
@@ -45,14 +31,14 @@
               [results]="formData.SessionInput">
             </ngx-charts-polar-chart>
           </div>
-          <clr-tooltip><h6 class="description" clrTooltipTrigger>Rating about Satisfaction, Usefulness and Helpfulness</h6>
+          <clr-tooltip><h6 class="description" clrTooltipTrigger>Session Experience</h6>
             <clr-tooltip-content clrPosition="top-right" clrSize="lg" *clrIfOpen>
-              <span>Shows the rating about how satisfied, useful and helpful in the following sessions.</span>
+              <span>Shows the rating about Satisfaction, Usefulness and Enjoyment of the Sessions (Pre-event Webinar, Checkpoints & Mentoring).</span>
             </clr-tooltip-content>
           </clr-tooltip>
         </div>
       </div>
-      <div class="clr-col-3 flex-display">
+      <div class="clr-col-5 flex-display">
           <div class="chart-container" *ngIf="formData.FutureInput.length > 0; else noParticipationData">
             <div class="chart-wrapper">
               <ngx-charts-pie-chart
@@ -77,16 +63,16 @@
   </div>
 </div>
 
-<ng-template #noOverallExperienceData>
+<ng-template #noSatisfactionData>
   <app-no-data
-  [captionTooltip]="'Shows the OVERALL EXPERIENCE of people participating in this hackathon.'" 
-  [captionText]="'Overall Experience'">
+  [captionTooltip]="'Shows the overall experience of people participating in this hackathon. (1-5)'"
+  [captionText]="'Satisfaction'">
   </app-no-data>
 </ng-template>
 <ng-template #noSocialData>
   <app-no-data
-  [captionTooltip]="'Shows the rating about how satisfied, useful and helpful in the following sessions.'"
-  [captionText]="'Rating about Satisfaction, Usefulness and Helpfulness'">
+  [captionTooltip]="'Shows the rating about Satisfaction, Usefulness and Enjoyment of the Sessions (Pre-event Webinar, Checkpoints & Mentoring).'"
+  [captionText]="'Session Experience'">
   </app-no-data>
 </ng-template>
 <ng-template #noParticipationData>

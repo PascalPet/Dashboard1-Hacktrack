@@ -13,100 +13,10 @@ export class EventMeasuresPipe implements PipeTransform {
 
   transform(eventMeasures: EventMeasures): any {
 
-    let SatisfactionInput = [
-      {
-        "name": "(1) Very dissatisfied to (5) Very satisfied",
-        "series": [
-          {
-            "name": "1",
-            "value": 0
-          },
-          {
-            "name": "2",
-            "value": 0
-          },
-          {
-            "name": "3",
-            "value": 0
-          },{
-            "name": "4",
-            "value": 0
-          },{
-            "name": "5",
-            "value": 0
-          }
-        ]
-      },
-      {
-        "name": "(1) Very displeased to (5) Very pleased",
-        "series": [
-          {
-            "name": "1",
-            "value": 0
-          },
-          {
-            "name": "2",
-            "value": 0
-          },
-          {
-            "name": "3",
-            "value": 0
-          },{
-            "name": "4",
-            "value": 0
-          },{
-            "name": "5",
-            "value": 0
-          }
-        ]
-      },
-      {
-        "name": "(1) Very frustrated to (5) Very contented",
-        "series": [
-          {
-            "name": "1",
-            "value": 0
-          },
-          {
-            "name": "2",
-            "value": 0
-          },
-          {
-            "name": "3",
-            "value": 0
-          },{
-            "name": "4",
-            "value": 0
-          },{
-            "name": "5",
-            "value": 0
-          }
-        ]
-      },
-      {
-        "name": "(1) Absolutely terrible to (5) Absolutely delighted",
-        "series": [
-          {
-            "name": "1",
-            "value": 0
-          },
-          {
-            "name": "2",
-            "value": 0
-          },
-          {
-            "name": "3",
-            "value": 0
-          },{
-            "name": "4",
-            "value": 0
-          },{
-            "name": "5",
-            "value": 0
-          }
-        ]
-      }
-    ];
+    let SatisfactionInput = {
+      avg: 0,
+      sd: 0
+    }
 
     let SessionInput = [
       {
@@ -185,38 +95,56 @@ export class EventMeasuresPipe implements PipeTransform {
       }
     ];
 
-    // for SatisfactionInput transform
-    if (isNotNullArray(eventMeasures.SatisfactionWithHackathon.Satisfaction)) {
-      for(let entry of eventMeasures.SatisfactionWithHackathon.Satisfaction.filter(value => value !== null)) {
-        SatisfactionInput[0].series[entry].value = SatisfactionInput[0].series[entry].value + 1;
-      }
-    } else {
-      SatisfactionInput.splice(SatisfactionInput.findIndex(item => item.name === '(1) Very dissatisfied to (5) Very satisfied'), 1);
-    } //  Satisfaction
+    let  helpAverageList:any[]  = [];
+    let  helpSdList: any[] = [];
 
-    if (isNotNullArray(eventMeasures.SatisfactionWithHackathon.Pleasure)) {
-      for(let entry of eventMeasures.SatisfactionWithHackathon.Pleasure.filter(value => value !== null)) {
-        SatisfactionInput[1].series[entry].value = SatisfactionInput[1].series[entry].value + 1;
+    for(const secondSet of Object.entries(eventMeasures.SatisfactionWithHackathon) as any[]){
+      if ((secondSet[1] as []).length !== 0 && isNotNullArray(secondSet[1])){
+        helpAverageList.push(average(secondSet[1].filter((value:any) => value !== null)));
+        helpSdList.push(standardDeviation(secondSet[1].filter((value:any) => value !== null)));
       }
+    }
+    if (helpAverageList.length !== 0) {
+      SatisfactionInput = {
+        avg : Math.round((average(helpAverageList) + 1 + Number.EPSILON) * 100) / 100,
+        sd: Math.round((average(helpSdList) + Number.EPSILON) * 100) / 100
+      };
     } else {
-      SatisfactionInput.splice(SatisfactionInput.findIndex(item => item.name === '(1) Very displeased to (5) Very pleased'), 1);
-    } // Pleasure
+      SatisfactionInput = {} as {avg: number, sd: number};
+    }
 
-    if (isNotNullArray(eventMeasures.SatisfactionWithHackathon.Contended)) {
-      for(let entry of eventMeasures.SatisfactionWithHackathon.Contended.filter(value => value !== null)) {
-        SatisfactionInput[2].series[entry].value = SatisfactionInput[2].series[entry].value + 1;
-      }
-    } else {
-      SatisfactionInput.splice(SatisfactionInput.findIndex(item => item.name === '(1) Very frustrated to (5) Very contented'), 1);
-    } // Contented
-
-    if (isNotNullArray(eventMeasures.SatisfactionWithHackathon.Delighted)) {
-      for(let entry of eventMeasures.SatisfactionWithHackathon.Delighted.filter(value => value !== null)) {
-        SatisfactionInput[3].series[entry].value = SatisfactionInput[3].series[entry].value + 1;
-      }
-    } else {
-      SatisfactionInput.splice(SatisfactionInput.findIndex(item => item.name === '(1) Absolutely terrible to (5) Absolutely delighted'), 1);
-    } // Delighted
+    // // for SatisfactionInput transform
+    // if (isNotNullArray(eventMeasures.SatisfactionWithHackathon.Satisfaction)) {
+    //   for(let entry of eventMeasures.SatisfactionWithHackathon.Satisfaction.filter(value => value !== null)) {
+    //     SatisfactionInput[0].series[entry].value = SatisfactionInput[0].series[entry].value + 1;
+    //   }
+    // } else {
+    //   SatisfactionInput.splice(SatisfactionInput.findIndex(item => item.name === '(1) Very dissatisfied to (5) Very satisfied'), 1);
+    // } //  Satisfaction
+    //
+    // if (isNotNullArray(eventMeasures.SatisfactionWithHackathon.Pleasure)) {
+    //   for(let entry of eventMeasures.SatisfactionWithHackathon.Pleasure.filter(value => value !== null)) {
+    //     SatisfactionInput[1].series[entry].value = SatisfactionInput[1].series[entry].value + 1;
+    //   }
+    // } else {
+    //   SatisfactionInput.splice(SatisfactionInput.findIndex(item => item.name === '(1) Very displeased to (5) Very pleased'), 1);
+    // } // Pleasure
+    //
+    // if (isNotNullArray(eventMeasures.SatisfactionWithHackathon.Contended)) {
+    //   for(let entry of eventMeasures.SatisfactionWithHackathon.Contended.filter(value => value !== null)) {
+    //     SatisfactionInput[2].series[entry].value = SatisfactionInput[2].series[entry].value + 1;
+    //   }
+    // } else {
+    //   SatisfactionInput.splice(SatisfactionInput.findIndex(item => item.name === '(1) Very frustrated to (5) Very contented'), 1);
+    // } // Contented
+    //
+    // if (isNotNullArray(eventMeasures.SatisfactionWithHackathon.Delighted)) {
+    //   for(let entry of eventMeasures.SatisfactionWithHackathon.Delighted.filter(value => value !== null)) {
+    //     SatisfactionInput[3].series[entry].value = SatisfactionInput[3].series[entry].value + 1;
+    //   }
+    // } else {
+    //   SatisfactionInput.splice(SatisfactionInput.findIndex(item => item.name === '(1) Absolutely terrible to (5) Absolutely delighted'), 1);
+    // } // Delighted
 
     if (isNotNullArray(eventMeasures.FutureParticipationIntentions)) {
       // for future transform
