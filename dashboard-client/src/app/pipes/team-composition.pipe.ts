@@ -3,6 +3,7 @@ import { TeamComposition } from 'src/models/interfaces/TeamComposition';
 import { role } from '../../models/enums/Role';
 import { average } from '../shared/average';
 import { isNotNullArray } from '../shared/nullCheckList';
+import {standardDeviation} from "../shared/standardDeviation";
 
 @Pipe({
   name: 'teamCompositionPipe'
@@ -27,13 +28,37 @@ export class TeamCompositionPipe implements PipeTransform {
     ,
       teamID: [] as string[],
       resourcesURL:[] as string[]
-};
+    ,
+      familiarity: {
+        avg: 0,
+        sd: 0
+      }
+  };
+
+  let  calculatedInput : {[k: string]: any} = {};
+  let  helpAverageList:any[]  = [];
+  let  helpSdList: any[] = [];
+
+  for(const secondSet of Object.entries(teamComposition.TeamFamiliarity)) {
+    if ((secondSet[1] as []).length !== 0 && isNotNullArray(secondSet[1])) {
+      helpAverageList.push(average(secondSet[1].filter((value: any) => value !== null)));
+      helpSdList.push(standardDeviation(secondSet[1].filter((value: any) => value !== null)));
+    }
+  }
+
+  if (helpAverageList.length !== 0) {
+    calculatedInputs.familiarity.avg = Math.round((average(helpAverageList) + 1 + Number.EPSILON) * 100) / 100;
+    calculatedInputs.familiarity.sd = Math.round((average(helpSdList) + Number.EPSILON) * 100) / 100;
+  } else {
+    calculatedInputs.familiarity = {} as {avg: number, sd: number};
+  }
+
   if (isNotNullArray(teamComposition.TeamSize) && teamComposition.TeamSize.filter(size => !isNaN(size)).length > 0) {
     calculatedInputs.teamSize = Math.round((average(teamComposition.TeamSize.filter(size => !isNaN(size) && size !== undefined && size !== null)) + Number.EPSILON) * 100) / 100;
   } else {
     calculatedInputs.teamSize = null;
   }
-  
+
   if (isNotNullArray(teamComposition.TeamLeader)) {
     for(let entry of teamComposition.TeamLeader.filter(value => value !== null)) {
       calculatedInputs.TeamLeader[entry].value = calculatedInputs.TeamLeader[entry].value + 1;
@@ -57,7 +82,7 @@ export class TeamCompositionPipe implements PipeTransform {
   } else {
     calculatedInputs.SocialLeader = new Array();
   }
-  
+
   calculatedInputs.teamID = teamComposition.TeamId.filter(value => value !== null && value !== undefined);
   calculatedInputs.resourcesURL = teamComposition.ResourcesURL.filter(value => value !== null && value !== undefined);
   return calculatedInputs;

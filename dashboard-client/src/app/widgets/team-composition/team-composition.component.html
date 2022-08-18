@@ -9,22 +9,31 @@
         <div class="clr-row">
             <div class="clr-col-2">
                 <app-long-answers-list *ngIf="formData.teamID.length > 0; else noNamesData"
-                    [captionTooltip]="'Team Names'" 
-                    [captionText]="'The Name of Teams participating'"
+                    [captionTooltip]="'Shows the names of participating Teams'"
+                    [captionText]="'Team Names'"
                     [answerList]="formData.teamID">
                 </app-long-answers-list>
             </div>
-            <div class="clr-col-2">
-                <app-basic-score-display *ngIf="formData.teamSize !== null; else noPeopleData"
-                    [captionTooltip]="'Average Team size'" 
-                    [scoreNumber]="formData.teamSize" 
-                    [captionText]="'The Number of People'">
+            <div class="clr-col-1">
+                <app-basic-score-display *ngIf="formData.familiarity !== {}; else noFamiliarityData"
+                    [captionTooltip]="'Shows the familiarity with the Team by each participant. (1-5)'"
+                    [scoreNumber]="formData.familiarity.avg"
+                    [bestPossibleNumber]="5"
+                    [sd]="formData.familiarity.sd"
+                    [captionText]="'Familiarity'">
                 </app-basic-score-display>
             </div>
+          <div class="clr-col-1">
+            <app-basic-score-display *ngIf="formData.teamSize !== null; else noPeopleData"
+                                     [captionTooltip]="'Shows the average Team size'"
+                                     [scoreNumber]="formData.teamSize"
+                                     [captionText]="'Team Size'">
+            </app-basic-score-display>
+          </div>
             <div class="clr-col-2">
                 <app-long-answers-list *ngIf="formData.resourcesURL.length > 0; else noResourcesData"
-                [captionTooltip]="'Shows the provided URL.'" 
-                [answerList]="formData.resourcesURL" 
+                [captionTooltip]="'Shows the provided URL.'"
+                [answerList]="formData.resourcesURL"
                 [captionText]="'Resources URL'"></app-long-answers-list>
             </div>
             <div class="clr-col-2">
@@ -83,14 +92,20 @@
 
 <ng-template #noNamesData>
     <app-no-data
-    [captionTooltip]="'Team Names'" 
-    [captionText]="'The Name of Teams participating'">
+    [captionTooltip]="'Shows the names of participating Teams'"
+    [captionText]="'Team Names'">
     </app-no-data>
+</ng-template>
+<ng-template #noFamiliarityData>
+  <app-no-data
+    [captionTooltip]="'Shows the familiarity with the Team by each participant. (1-5)'"
+    [captionText]="'Familiarity'">
+  </app-no-data>
 </ng-template>
 <ng-template #noPeopleData>
     <app-no-data
-    [captionTooltip]="'Average Team size'"
-    [captionText]="'The Number of People'">
+    [captionTooltip]="'Shows the average Team size'"
+    [captionText]="'Team Size'">
     </app-no-data>
 </ng-template>
 <ng-template #noResourcesData>

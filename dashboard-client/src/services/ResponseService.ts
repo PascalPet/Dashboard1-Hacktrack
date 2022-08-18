@@ -16,7 +16,7 @@ import { Mentoring } from "src/models/interfaces/Mentoring";
 import { IndividualProgrammingExperience } from "src/models/interfaces/IndividualProgrammingExperience";
 import { role } from "src/models/enums/Role";
 import {userAnswers} from "../services/data";
-//#endregion 
+//#endregion
 
 export class ResponseService {
 //#region Instances
@@ -33,6 +33,7 @@ export class ResponseService {
         TeamLeader: [],
         TeamManager: [],
         SocialLeader: [],
+        TeamFamiliarity: {}
     }
     public teamProcess : TeamProcess = {
         SatisfactionWithProcess:{
@@ -88,7 +89,7 @@ export class ResponseService {
         ProgrammingComfort: {},
     };
 
-    
+
 //#endregion
 //#region exampleData
     readonly teams : string[] = [
@@ -96,7 +97,7 @@ export class ResponseService {
     ];
     readonly exampleString : string = 'exampleString';
 
-    
+
 //#endregion
     constructor() {
         //individualMeasures
@@ -193,6 +194,13 @@ export class ResponseService {
         this.individualProgrammingExperience.ProgrammingComfort['I am comfortable to write programs in DJANGO/AIRAVATA.'] = [];
         this.individualProgrammingExperience.ProgrammingComfort['I am comfortable to use REQUESTS, JSON and XML.'] = [];
         this.individualProgrammingExperience.ProgrammingComfort['I am comfortable to use JUPYTER NOTEBOOKS.'] = [];
+
+        //teamComposition
+
+        this.teamComposition.TeamFamiliarity["I knew my team members well."] = [];
+        this.teamComposition.TeamFamiliarity["I have collaborated with some of my team members before."] = []
+        this.teamComposition.TeamFamiliarity["I have been close to some of my team members before."] = []
+        this.teamComposition.TeamFamiliarity["I have socialized with some of my team members (outside of this hackathon) before."] = []
      }
      getValue(id : string, userAnswer : any) : string{
         return userAnswer?.answers[id]?.textAnswers?.answers[0]?.value;
@@ -215,95 +223,95 @@ export class ResponseService {
      getRandomInt(max : number) {
         return Math.floor(Math.random() * max);
       }
-      
+
 
     getAge(pAge: string): any {
         if(!pAge) return null;
 
         switch(pAge.toLowerCase()){
-        case '18 to 24': { 
-            return age.Range1; 
-            break; 
-         } 
-         case '25 to 34': { 
-            return age.Range2; 
-            break; 
+        case '18 to 24': {
+            return age.Range1;
+            break;
          }
-         case '35 to 44': { 
-             return age.Range3; 
-             break; 
-          }
-          case '45 to 54': { 
-             return age.Range4; 
-             break; 
-          }
-          case '55 to 64': { 
-            return age.Range5; 
-            break; 
-         } 
-         case '65 to 74': { 
-            return age.Range6; 
-            break; 
+         case '25 to 34': {
+            return age.Range2;
+            break;
          }
-         case '75 or older': { 
-             return age.Range7; 
-             break; 
+         case '35 to 44': {
+             return age.Range3;
+             break;
           }
-          case 'prefer not to say': { 
-             return age.PreferNotToSay; 
-             break; 
+          case '45 to 54': {
+             return age.Range4;
+             break;
           }
-          default: { 
+          case '55 to 64': {
+            return age.Range5;
+            break;
+         }
+         case '65 to 74': {
+            return age.Range6;
+            break;
+         }
+         case '75 or older': {
+             return age.Range7;
+             break;
+          }
+          case 'prefer not to say': {
+             return age.PreferNotToSay;
+             break;
+          }
+          default: {
             throw new Error(pAge)
-        } 
+        }
         }
     }
-    
+
     getEducation(pEdudation: string): any {
 
         if(!pEdudation) return null;
         switch(pEdudation.toLowerCase()){
 
-        case 'high school diploma or ged': { 
-            return education.HighSchool; 
-            break; 
-         } 
-         case 'some college, associate and/or bachelor\'s degree': { 
-             return education.CollegeAssociateBachelor; 
-             break; 
-          }
-          case 'bachelor\'s degree': { 
-             return education.Bachelor; 
-             break; 
-          }
-          case 'professional degree': { 
-            return education.Professional; 
-            break; 
-         } 
-         case 'master\'s degree': { 
-            return education.Master; 
-            break; 
+        case 'high school diploma or ged': {
+            return education.HighSchool;
+            break;
          }
-         case 'doctorate': { 
-             return education.Doctorate; 
-             break; 
+         case 'some college, associate and/or bachelor\'s degree': {
+             return education.CollegeAssociateBachelor;
+             break;
           }
-          case 'prefer not to say': { 
-             return education.PreferNotToSay; 
-             break; 
+          case 'bachelor\'s degree': {
+             return education.Bachelor;
+             break;
           }
-          default: { 
+          case 'professional degree': {
+            return education.Professional;
+            break;
+         }
+         case 'master\'s degree': {
+            return education.Master;
+            break;
+         }
+         case 'doctorate': {
+             return education.Doctorate;
+             break;
+          }
+          case 'prefer not to say': {
+             return education.PreferNotToSay;
+             break;
+          }
+          default: {
             throw new Error(pEdudation)
-        } 
+        }
         }
     }
 
-    
+
     getFivePointScala(answer : string): any {
         if(!answer) return null;
 
         let pAnswer = answer.toLowerCase()
-        switch(pAnswer) { 
+        switch(pAnswer) {
             case 'not at all':
             case 'strongly disagree':
             case 'definitely not':
@@ -311,10 +319,10 @@ export class ResponseService {
             case 'not enjoyable':
             case 'very inexperienced':
             case 'definitely not':
-            case '(1)': { 
-               return fivePointLikertScale.Least; 
-               break; 
-            } 
+            case '(1)': {
+               return fivePointLikertScale.Least;
+               break;
+            }
             case 'to some extent':
             case 'somewhat disagree':
             case 'probably not':
@@ -322,9 +330,9 @@ export class ResponseService {
             case 'slightly enjoyable':
             case 'inexperienced.':
             case 'probably not':
-            case '(2)': { 
-               return fivePointLikertScale.MediumLeast; 
-               break; 
+            case '(2)': {
+               return fivePointLikertScale.MediumLeast;
+               break;
             }
             case 'to a moderate extent':
             case 'neither agree nor disagree':
@@ -333,9 +341,9 @@ export class ResponseService {
             case 'moderately enjoyable':
             case 'comparable.':
             case 'might or might not,':
-            case '(3)': { 
-                return fivePointLikertScale.Medium; 
-                break; 
+            case '(3)': {
+                return fivePointLikertScale.Medium;
+                break;
              }
             case 'to a large extent':
             case 'somewhat agree':
@@ -344,9 +352,9 @@ export class ResponseService {
             case 'enjoyable':
             case 'experienced.':
             case 'probably yes':
-            case '(4)': { 
-                return fivePointLikertScale.MediumMax; 
-                break; 
+            case '(4)': {
+                return fivePointLikertScale.MediumMax;
+                break;
              }
             case 'completely':
             case 'strongly agree':
@@ -355,51 +363,51 @@ export class ResponseService {
             case 'very enjoyable':
             case 'very experienced.':
             case 'definitely yes':
-            case '(5)':  { 
-                return fivePointLikertScale.Max; 
-                break; 
+            case '(5)':  {
+                return fivePointLikertScale.Max;
+                break;
              }
-            default: { 
+            default: {
                 if(answer.includes('(1)')){
-                    return fivePointLikertScale.Least; 
+                    return fivePointLikertScale.Least;
                 }else{if(answer.includes('(2)')){
-                    return fivePointLikertScale.MediumLeast; 
+                    return fivePointLikertScale.MediumLeast;
                 }else{if(answer.includes('(3)')){
-                    return fivePointLikertScale.Medium; 
+                    return fivePointLikertScale.Medium;
                 }else{if(answer.includes('(4)')){
-                    return fivePointLikertScale.MediumMax; 
+                    return fivePointLikertScale.MediumMax;
                 }else{if(answer.includes('(5)')){
-                    return fivePointLikertScale.Max; 
+                    return fivePointLikertScale.Max;
                 }}}}}
                 throw new Error(answer)
             }
         }
     }
 
-    
+
     getGender(pGender: string): any {
         if(!pGender) return null;
         switch(pGender.toLowerCase()){
-       
-        case 'female': { 
-            return gender.Female; 
-            break; 
-         } 
-         case 'male': { 
-            return gender.Male; 
-            break; 
+
+        case 'female': {
+            return gender.Female;
+            break;
          }
-         case 'non-binary': { 
-             return gender.NonBinary; 
-             break; 
+         case 'male': {
+            return gender.Male;
+            break;
+         }
+         case 'non-binary': {
+             return gender.NonBinary;
+             break;
           }
-          case 'prefer not to say': { 
-             return gender.PreferNotToSay; 
-             break; 
+          case 'prefer not to say': {
+             return gender.PreferNotToSay;
+             break;
           }
-          default: { 
+          default: {
             throw new Error(pGender)
-        } 
+        }
         }
     }
 
@@ -407,57 +415,57 @@ export class ResponseService {
     getMinority(answer: string): any {
         if(!answer) return null;
         switch(answer.toLowerCase()){
-        case 'yes': { 
-            return minority.Yes; 
-            break; 
-         } 
-         case 'no': { 
-            return minority.No; 
-            break; 
+        case 'yes': {
+            return minority.Yes;
+            break;
          }
-         case 'prefer not to say': { 
-             return minority.PreferNotToSay; 
-             break; 
+         case 'no': {
+            return minority.No;
+            break;
+         }
+         case 'prefer not to say': {
+             return minority.PreferNotToSay;
+             break;
           }
-          default: { 
+          default: {
             throw new Error(answer)
-        } 
+        }
         }
     }
 
     getRole(pRole: string): any {
         if(!pRole) return null;
-        switch(pRole.toLowerCase()) { 
+        switch(pRole.toLowerCase()) {
             case 'yes, i was the team leader.':
             case 'yes, i was the project manager.':
-            case 'yes, i was the social-emotional leader.': { 
-               return role.Yes; 
-               break; 
-            } 
+            case 'yes, i was the social-emotional leader.': {
+               return role.Yes;
+               break;
+            }
             case 'yes, someone else was the team leader.':
             case 'yes, someone else was the project manager.':
-            case 'yes, someone else was the social-emotional leader.': { 
-               return role.SomeOneElse; 
-               break; 
+            case 'yes, someone else was the social-emotional leader.': {
+               return role.SomeOneElse;
+               break;
             }
             case 'no, there was no clear leader in the team':
             case 'no, there was no clear project manager in the team':
-            case 'no, there was no clear social-emotional leader in the team': { 
-                return role.Nobody; 
-                break; 
+            case 'no, there was no clear social-emotional leader in the team': {
+                return role.Nobody;
+                break;
              }
-            
-            default: { 
+
+            default: {
                 throw new Error(pRole);
-                
-            } 
+
+            }
         }
     }
 
 
 
-    
-    
+
+
      insertIndividualMeasures(userAnswer : any) : void{
         this.individualMeasures.Motivation['Having fun'].push( this.getFivePointScala(this.getValue('00000011',userAnswer)));
         this.individualMeasures.Motivation['Making something cool / Working on an interesting project idea'].push(this.getFivePointScala(this.getValue('00000012',userAnswer)));
@@ -492,7 +500,7 @@ export class ResponseService {
     this.teamProcess.Voice['Overall, the participation of each member in the team was effective.'].push( this.getFivePointScala(this.getValue('00000194',userAnswer)));
 
    }
-   
+
    insertProjectMeasures(userAnswer : any) : void {
        this.projectMeasures.SatisfactionWithOutcome['I am satisfied with the work completed in my project.'].push( this.getFivePointScala(this.getValue('00000211',userAnswer)));
        this.projectMeasures.SatisfactionWithOutcome['I am satisfied with the quality of my team\'s output.'].push( this.getFivePointScala(this.getValue('00000212',userAnswer)));
@@ -559,6 +567,10 @@ export class ResponseService {
             this.teamComposition.TeamLeader.push(this.getRole(this.getValue('00000091',userAnswer)));
             this.teamComposition.TeamManager.push(this.getRole(this.getValue('00000101',userAnswer)));
             this.teamComposition.SocialLeader.push(this.getRole(this.getValue('00000111',userAnswer)));
+            this.teamComposition.TeamFamiliarity["I knew my team members well."].push(this.getFivePointScala(this.getValue('00000121', userAnswer)));
+            this.teamComposition.TeamFamiliarity["I have collaborated with some of my team members before."].push(this.getFivePointScala(this.getValue('00000122', userAnswer)));
+            this.teamComposition.TeamFamiliarity["I have been close to some of my team members before."].push(this.getFivePointScala(this.getValue('00000123', userAnswer)));
+            this.teamComposition.TeamFamiliarity["I have socialized with some of my team members (outside of this hackathon) before."].push(this.getFivePointScala(this.getValue('00000124', userAnswer)));
     }
 
 
@@ -599,7 +611,7 @@ export class ResponseService {
     insertIndividualProgrammingExperience(userAnswer : any) : void {
         this.individualProgrammingExperience.ProgrammingExperienceYears.push(Number(this.getValue('00000451',userAnswer)));
         this.individualProgrammingExperience.ProgrammingExperienceComparison.push(this.getFivePointScala(this.getValue('00000461',userAnswer)));
-        
+
         this.individualProgrammingExperience.ProgrammingAbility['I am able to write some parts of programs in JAVA.'].push(this.getFivePointScala(this.getValue('00000471',userAnswer)));
         this.individualProgrammingExperience.ProgrammingAbility['I am able to write some parts of programs in JAVASCRIPT.'].push(this.getFivePointScala(this.getValue('00000472',userAnswer)));
         this.individualProgrammingExperience.ProgrammingAbility['I am able to write some parts of programs in PYTHON.'].push(this.getFivePointScala(this.getValue('00000473',userAnswer)));
@@ -625,5 +637,5 @@ export class ResponseService {
     this.demographicsIndividualBackground.Education.push(this.getEducation(this.getValue('00000521',userAnswer)));
     this.demographicsIndividualBackground.Minority.push(this.getMinority(this.getValue('00000531',userAnswer)));
    }
-   
+
 }

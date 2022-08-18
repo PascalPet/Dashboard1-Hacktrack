@@ -53,6 +53,7 @@ export class ShellComponent implements OnInit {
         } else {
           this.responseService = new ResponseService();
           this.responseService.parseUser(response);
+          console.log(this.responseService);
           this.loadingData = false;
         }
         this.responseService.parseUser(userAnswers);

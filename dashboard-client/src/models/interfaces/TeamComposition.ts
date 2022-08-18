@@ -1,4 +1,5 @@
 import { role } from "../enums/Role";
+import {fivePointLikertScale} from "../enums/FivePointLikertScale";
 
 export interface TeamComposition{
     TeamId : string[];
@@ -8,4 +9,5 @@ export interface TeamComposition{
     TeamLeader : role[];
     TeamManager : role[];
     SocialLeader : role[];
+    TeamFamiliarity:{[key: string]: fivePointLikertScale[]};
 }
