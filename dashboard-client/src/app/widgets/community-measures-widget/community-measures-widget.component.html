@@ -8,61 +8,22 @@
   <div class="card-body">
     <div class="clr-row">
       <div class="clr-col-6">
-        <div class="chart-container" *ngIf="formData.CommunityData.length > 0; else noCommunityData">
-          <div class="chart-wrapper">
-            <ngx-charts-bar-horizontal
-              [legendTitle]="community_legendTitle"
-              [scheme]="'natural'"
-              [legend]="false"
-              [results]="formData.CommunityData"
-              [xAxis]="true"
-              [barPadding]="2"
-              [showYAxisLabel]="false"
-              [yAxis]="true"
-              [xScaleMax]="4"
-              [xScaleMin]="0"
-              [trimYAxisTicks]="false"
-              [rotateXAxisTicks]="false"
-              [trimXAxisTicks]="true"
-              [maxXAxisTickLength]="7">
-            </ngx-charts-bar-horizontal>
-          </div>
-          <clr-tooltip><h6 class="description" clrTooltipTrigger>Community Identification</h6>
-            <clr-tooltip-content clrPosition="top-right" clrSize="lg" *clrIfOpen>
-              <span>Shows the identification with the community.</span>
-            </clr-tooltip-content>
-          </clr-tooltip>
-        </div>
+        <app-basic-score-display
+          [scoreNumber]="formData.CommunityIdentification.avg"
+          [bestPossibleNumber]="5"
+          [sd]="formData.CommunityIdentification.sd"
+          [captionText]="'Community Identification'"
+          [captionTooltip]="'Shows the identification with the community. (1-5)'">
+        </app-basic-score-display>
       </div>
       <div class="clr-col-6">
-        <div class="chart-container" *ngIf="formData.SocialData.length > 0; else noCapitalData">
-          <div class="chart-wrapper">
-            <div class="chart-wrapper">
-              <ngx-charts-bar-horizontal
-                [results]="formData.SocialData"
-                [xAxis]="true"
-                [barPadding]="2"
-                [showYAxisLabel]="false"
-                [yAxis]="true"
-                [xScaleMax]="4"
-                [xScaleMin]="0"
-                [trimYAxisTicks]="true"
-                [scheme]="'natural'"
-                [rotateXAxisTicks]="false"
-                [trimXAxisTicks]="true"
-                [maxYAxisTickLength]="Social_maxYAxisTickLength">
-              </ngx-charts-bar-horizontal>
-            </div>
-          </div>
-          <div class="tooltip-container">
-            <clr-tooltip>
-              <h6 class="description" clrTooltipTrigger>Social Capital</h6>
-              <clr-tooltip-content clrPosition="top-right" clrSize="lg" *clrIfOpen>
-                <span>Shows the agreement with the following statements about your relationship below.</span>
-              </clr-tooltip-content>
-            </clr-tooltip>
-          </div>
-        </div>
+        <app-basic-score-display
+          [scoreNumber]="formData.SocialCapital.avg"
+          [bestPossibleNumber]="5"
+          [sd]="formData.SocialCapital.sd"
+          [captionText]="'Social Capital'"
+          [captionTooltip]="'Shows the social capital reported by participants. (1-5)'">
+        </app-basic-score-display>
       </div>
     </div>
   </div>
@@ -71,13 +32,13 @@
 <ng-template #noCommunityData>
   <app-no-data
   [captionText]="'Community Identification'"
-  [captionTooltip]="'Shows the identification with the community.'">
+  [captionTooltip]="'Shows the identification with the community. (1-5)'">
   </app-no-data>
 </ng-template>
 <ng-template #noCapitalData>
   <app-no-data
   [captionText]="'Social Capital'"
-  [captionTooltip]="'Shows the agreement with the following statements about your relationship below.'"
+  [captionTooltip]="'Shows the social capital reported by participants. (1-5)'"
   [tooltipLeft]="true">
   </app-no-data>
 </ng-template>

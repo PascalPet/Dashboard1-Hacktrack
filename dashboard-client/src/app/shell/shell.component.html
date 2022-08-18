@@ -61,7 +61,7 @@
                     <app-mentoring-widget *ngIf="distribution.second === widgets.mentoring"
                     [formData]="(responseService.mentoring|mentoringPipe)"></app-mentoring-widget>
                     <app-community-measures-widget *ngIf="distribution.second === widgets.communityMeasures"
-                    [formData]="(responseService.communityMeasures|communityMeasuresPipe)"></app-community-measures-widget>
+                    [formData]="(responseService.communityMeasures|projectMeasuresPipe)"></app-community-measures-widget>
                     <app-team-composition *ngIf="distribution.second === widgets.teamComposition"
                     [formData]="(responseService.teamComposition|teamCompositionPipe)"></app-team-composition>
                 </div>

@@ -3,13 +3,14 @@ import { ProjectMeasures } from 'src/models/interfaces/ProjectMeasures';
 import { average } from 'src/app/shared/average';
 import { standardDeviation } from '../shared/standardDeviation';
 import { isNotNullArray } from '../shared/nullCheckList';
+import {CommunityMeasures} from "../../models/interfaces/CommunityMeasures";
 
 @Pipe({
   name: 'projectMeasuresPipe'
 })
 export class ProjectMeasuresPipe implements PipeTransform {
 
-  transform(multipleLikertQuestions: ProjectMeasures): any {
+  transform(multipleLikertQuestions: ProjectMeasures | CommunityMeasures): any {
     let  calculatedInput : {[k: string]: any} = {};
     let  helpAverageList:any[]  = [];
     let  helpSdList: any[] = [];
