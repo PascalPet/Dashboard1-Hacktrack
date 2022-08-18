@@ -40,10 +40,8 @@ import { ProgrammingExperiencePipe } from './pipes/programming-experience.pipe';
 import { IndividualMeasuresPipe } from './pipes/individual-measures.pipe';
 import { MentoringPipe } from './pipes/mentoring.pipe';
 import { TeamCompositionPipe } from './pipes/team-composition.pipe';
-import { TeamProcessPipe } from './pipes/team-process.pipe';
 import { EventMeasuresPipe } from "./pipes/event-measures.pipe";
 import { EventMeasuresFartherPipe } from "./pipes/event-measures-farther.pipe";
-import { CommunityMeasuresPipe } from "./pipes/community-measures.pipe";
 import { PolarChartMarginRemovalDirective } from "./shared/directives/polar-chart-margin-removal.directive";
 import { FormsModule } from '@angular/forms';
 import { NoDataComponent } from './shared/no-data/no-data.component';
@@ -80,10 +78,8 @@ ClarityIcons.addIcons(cogIcon, resizeIcon, infoCircleIcon, refreshIcon, exclamat
     IndividualMeasuresPipe,
     MentoringPipe,
     TeamCompositionPipe,
-    TeamProcessPipe,
     EventMeasuresPipe,
     EventMeasuresFartherPipe,
-    CommunityMeasuresPipe,
     PolarChartMarginRemovalDirective,
     NoDataComponent
   ],

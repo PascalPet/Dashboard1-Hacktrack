@@ -39,7 +39,7 @@
                     <app-demographics-widget *ngIf="distribution.first === widgets.demographics"
                     [formData]="(responseService.demographicsIndividualBackground|demographicsPipe)"></app-demographics-widget>
                     <app-team-process *ngIf="distribution.first === widgets.teamProcess"
-                    [formData]="(responseService.teamProcess|teamProcessPipe)"></app-team-process>
+                    [formData]="(responseService.teamProcess|projectMeasuresPipe)"></app-team-process>
                 </div>
             </div>
             <div class="clr-row">

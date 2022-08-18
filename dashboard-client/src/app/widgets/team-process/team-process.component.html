@@ -8,52 +8,32 @@
     <div class="card-body">
         <div class="clr-row">
             <div class="clr-col-4">
-                <div class="chart-container" *ngIf="formData.columnChartData.length > 0; else noSatisfactionData">
-                    <div class="chart-wrapper">
-                        <ngx-charts-bar-vertical-2d 
-                            [results]="formData.columnChartData" 
-                            [xAxis]="true" 
-                            [barPadding]="2"
-                            [showYAxisLabel]="false" 
-                            [showXAxisLabel]="false"
-                            [yAxis]="true" 
-                            [trimYAxisTicks]="true"
-                            [scheme]="'natural'">
-                        </ngx-charts-bar-vertical-2d>
-                    </div>
-                    <clr-tooltip>
-                        <h6 class="description" clrTooltipTrigger>Satisfaction With Process</h6>
-                        <clr-tooltip-content clrPosition="top-left" clrSize="lg" *clrIfOpen>
-                            <span>
-                                Shows the amount of people calling each statement 
-                                where positive and negative scores are tendencies 
-                                combining extreme and less extreme calling.
-                            </span>
-                        </clr-tooltip-content>
-                    </clr-tooltip>
-                </div>
+                <app-basic-score-display *ngIf="formData.SatisfactionWithProcess.length !== 0; else noSatisfactionData"
+                                         [bestPossibleNumber]="5"
+                                         [scoreNumber]="formData.SatisfactionWithProcess.avg"
+                                         [sd]="formData.SatisfactionWithProcess.sd"
+                                         [captionText]="'Satisfaction With Process'"
+                                         [captionTooltip]="'Shows the satisfaction with the team process. (1-5)'">
+                </app-basic-score-display>
             </div>
-            <div class="clr-col-8">
-                <div class="chart-container" *ngIf="formData.voiceChartData.length > 0; else noVoiceData">
-                    <div class="chart-wrapper">
-                        <ngx-charts-bar-horizontal
-                        [results]="formData.voiceChartData"
-                        [xAxis]="true"
-                        [barPadding]="2"
-                        [xScaleMax]="5"
-                        [xScaleMin]="1"
-                        [showYAxisLabel]="false"
-                        [yAxis]="true"
-                        [trimYAxisTicks]="false"
-                        [scheme]="'natural'">
-                        </ngx-charts-bar-horizontal>
-                    </div>
-                    <clr-tooltip><h6 class="description" clrTooltipTrigger>Team Voice</h6>
-                    <clr-tooltip-content clrPosition="top-left" clrSize="lg" *clrIfOpen>
-                        <span>Shows the average approval towards each statement by the participants.</span>
-                    </clr-tooltip-content>
-                    </clr-tooltip>
-                </div>
+            <div class="clr-col-4">
+                <app-basic-score-display *ngIf="formData.GoalClarity.length !== 0; else noClarityData"
+                                         [bestPossibleNumber]="5"
+                                         [scoreNumber]="formData.GoalClarity.avg"
+                                         [sd]="formData.GoalClarity.sd"
+                                         [captionText]="'Goal Clarity'"
+                                         [captionTooltip]="'Shows the clarity of the goals percieved by the participants. (1-5)'">
+                </app-basic-score-display>
+            </div>
+            <div class="clr-col-4">
+                <app-basic-score-display *ngIf="formData.Voice.length !== 0; else noVoiceData"
+                                         [bestPossibleNumber]="5"
+                                         [scoreNumber]="formData.Voice.avg"
+                                         [sd]="formData.Voice.sd"
+                                         [captionText]="'Team Voice'"
+                                         [captionTooltip]="'Shows the percieved Voice the participants had in the team. (1-5)'"
+                                         [tooltipLeft]="true">
+                </app-basic-score-display>
             </div>
         </div>
     </div>
@@ -61,13 +41,19 @@
 
 <ng-template #noSatisfactionData>
     <app-no-data
-    [captionTooltip]="'Shows the average approval towards each statement by the participants where positive and negative scores are tendencies combining extreme and less extreme approval.'" 
+    [captionTooltip]="'Shows the satisfaction with the team process. (1-5)'"
     [captionText]="'Satisfaction With Process'">
     </app-no-data>
 </ng-template>
 <ng-template #noVoiceData>
     <app-no-data
-    [captionTooltip]="'Shows the average approval towards each statement by the participants.'"
+    [captionTooltip]="'Shows the percieved Voice the participants had in the team. (1-5)'"
     [captionText]="'Team Voice'">
     </app-no-data>
+</ng-template>
+<ng-template #noClarityData>
+  <app-no-data
+    [captionTooltip]="'Shows the clarity of the goals percieved by the participants. (1-5)'"
+    [captionText]="'Goal Clarity'">
+  </app-no-data>
 </ng-template>

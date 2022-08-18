@@ -6,6 +6,6 @@ export interface TeamProcess{
         Fairness: fivePointLikertScale[],
         Understanding: fivePointLikertScale[],
     };
-    GoalClarty:{[key: string]: fivePointLikertScale[]}
+    GoalClarity:{[key: string]: fivePointLikertScale[]}
     Voice:{[key: string]: fivePointLikertScale[]}
 }

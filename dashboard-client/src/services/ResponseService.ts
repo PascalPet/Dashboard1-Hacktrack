@@ -42,7 +42,7 @@ export class ResponseService {
             Fairness: [],
             Understanding: [],
         },
-        GoalClarty:{},
+        GoalClarity:{},
         Voice:{},
     }
     public projectMeasures : ProjectMeasures = {
@@ -113,9 +113,9 @@ export class ResponseService {
         this.individualMeasures.Motivation['Having fun'] = [];
         //teamProcess
 
-        this.teamProcess.GoalClarty['I was uncertain of my duties and responsibilities in this team.'] = [];
-        this.teamProcess.GoalClarty['I was unclear about the goals and objectives for my work in this team.'] = [];
-        this.teamProcess.GoalClarty['I was unsure how my work relates to the overall objectives of my team.'] = [];
+        this.teamProcess.GoalClarity['I was uncertain of my duties and responsibilities in this team.'] = [];
+        this.teamProcess.GoalClarity['I was unclear about the goals and objectives for my work in this team.'] = [];
+        this.teamProcess.GoalClarity['I was unsure how my work relates to the overall objectives of my team.'] = [];
 
         this.teamProcess.Voice['Everyone had a chance to express his/her opinion.'] = [];
         this.teamProcess.Voice['The team members responded to the comments made by others.'] = [];
@@ -490,9 +490,9 @@ export class ResponseService {
     this.teamProcess.SatisfactionWithProcess.Fairness.push(this.getFivePointScala(this.getValue('00000161',userAnswer)));
     this.teamProcess.SatisfactionWithProcess.Understanding.push(this.getFivePointScala(this.getValue('00000171',userAnswer)));
 
-    this.teamProcess.GoalClarty['I was uncertain of my duties and responsibilities in this team.'].push( this.getFivePointScala(this.getValue('00000181',userAnswer)));
-    this.teamProcess.GoalClarty['I was unclear about the goals and objectives for my work in this team.'].push( this.getFivePointScala(this.getValue('00000182',userAnswer)));
-    this.teamProcess.GoalClarty['I was unsure how my work relates to the overall objectives of my team.'].push( this.getFivePointScala(this.getValue('00000183',userAnswer)));
+    this.teamProcess.GoalClarity['I was uncertain of my duties and responsibilities in this team.'].push( this.getFivePointScala(this.getValue('00000181',userAnswer)));
+    this.teamProcess.GoalClarity['I was unclear about the goals and objectives for my work in this team.'].push( this.getFivePointScala(this.getValue('00000182',userAnswer)));
+    this.teamProcess.GoalClarity['I was unsure how my work relates to the overall objectives of my team.'].push( this.getFivePointScala(this.getValue('00000183',userAnswer)));
 
     this.teamProcess.Voice['Everyone had a chance to express his/her opinion.'].push( this.getFivePointScala(this.getValue('00000191',userAnswer)));
     this.teamProcess.Voice['The team members responded to the comments made by others.'].push( this.getFivePointScala(this.getValue('00000192',userAnswer)));
