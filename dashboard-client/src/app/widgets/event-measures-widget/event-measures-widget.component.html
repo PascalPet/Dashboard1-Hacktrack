@@ -8,7 +8,7 @@
   <div class="card-body">
     <div class="clr-row">
       <div class="clr-col-2">
-        <app-basic-score-display *ngIf="formData.SatisfactionInput !== {}; else noSatisfactionData"
+        <app-basic-score-display *ngIf="(formData.SatisfactionInput | keyvalue)?.length; else noSatisfactionData"
           [scoreNumber]="formData.SatisfactionInput.avg"
           [bestPossibleNumber]="5"
           [sd]="formData.SatisfactionInput.sd"

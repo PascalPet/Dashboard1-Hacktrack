@@ -8,7 +8,7 @@
   <div class="card-body">
     <div class="clr-row">
       <div class="clr-col-6">
-        <app-basic-score-display
+        <app-basic-score-display *ngIf="formData.CommunityIdentification.length !== 0; else noCommunityData"
           [scoreNumber]="formData.CommunityIdentification.avg"
           [bestPossibleNumber]="5"
           [sd]="formData.CommunityIdentification.sd"
@@ -17,7 +17,7 @@
         </app-basic-score-display>
       </div>
       <div class="clr-col-6">
-        <app-basic-score-display
+        <app-basic-score-display *ngIf="formData.SocialCapital.length !== 0; else noCapitalData"
           [scoreNumber]="formData.SocialCapital.avg"
           [bestPossibleNumber]="5"
           [sd]="formData.SocialCapital.sd"

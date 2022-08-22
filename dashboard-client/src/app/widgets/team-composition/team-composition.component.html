@@ -15,7 +15,7 @@
                 </app-long-answers-list>
             </div>
             <div class="clr-col-1">
-                <app-basic-score-display *ngIf="formData.familiarity !== {}; else noFamiliarityData"
+                <app-basic-score-display *ngIf="(formData.familiarity | keyvalue)?.length; else noFamiliarityData"
                     [captionTooltip]="'Shows the familiarity with the Team by each participant. (1-5)'"
                     [scoreNumber]="formData.familiarity.avg"
                     [bestPossibleNumber]="5"
