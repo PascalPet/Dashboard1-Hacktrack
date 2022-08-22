@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { colorScheme } from '../../shared/scheme';
 
 @Component({
   selector: 'app-motivation-widget',
@@ -9,6 +10,8 @@ export class MotivationWidgetComponent implements OnInit {
 
   @Input()
   formData?: any;
+
+  colorScheme = colorScheme;
 
   constructor() { }
 

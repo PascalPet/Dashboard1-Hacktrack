@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { colorScheme } from '../../shared/scheme';
 
 @Component({
   selector: 'app-programming-experience-widget',
@@ -6,6 +7,8 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./programming-experience-widget.component.scss']
 })
 export class ProgrammingExperienceWidgetComponent implements OnInit {
+
+  colorScheme = colorScheme;
 
   @Input()
   formData?: any;

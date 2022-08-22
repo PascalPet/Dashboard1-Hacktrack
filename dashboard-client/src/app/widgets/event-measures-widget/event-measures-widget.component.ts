@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {LegendPosition} from "@swimlane/ngx-charts";
+import { colorScheme } from '../../shared/scheme';
 
 @Component({
   selector: 'app-event-measures-widget',
@@ -7,6 +8,8 @@ import {LegendPosition} from "@swimlane/ngx-charts";
   styleUrls: ['./event-measures-widget.component.scss']
 })
 export class EventMeasuresWidgetComponent implements OnInit {
+
+  colorScheme = colorScheme;
 
   overall_view: [number, number] = [300, 300];
   polar_view: [number, number] = [1100, 400];

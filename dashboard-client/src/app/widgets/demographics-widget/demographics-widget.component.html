@@ -17,7 +17,7 @@
                         [showYAxisLabel]="false"
                         [yAxis]="true"
                         [trimYAxisTicks]="false"
-                        [scheme]="'natural'"
+                        [scheme]="colorScheme"
                         [rotateXAxisTicks]="false"
                         [trimXAxisTicks]="true"
                         [maxXAxisTickLength]="7">
@@ -45,7 +45,7 @@
                             appChartMarginRemoval
                             [results]="formData.minority"
                             [labels]="false"
-                            [scheme]="'natural'"
+                            [scheme]="colorScheme"
                             [doughnut]="true"
                             [arcWidth]="0.5"
                             [legend]="true"
@@ -77,7 +77,7 @@
 
 <ng-template #noAgeData>
     <app-no-data
-    [captionTooltip]="'Shows the distribution of age reported by the participants.'" 
+    [captionTooltip]="'Shows the distribution of age reported by the participants.'"
     [captionText]="'Age Distribution'">
     </app-no-data>
 </ng-template>

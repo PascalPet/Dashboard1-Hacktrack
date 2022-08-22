@@ -9,8 +9,8 @@
         <div class="clr-row">
             <div class="clr-col-2">
                 <app-basic-score-display *ngIf="formData.years !== null; else noYearsData"
-                    [captionTooltip]="'Shows the average amount of programming experience in years.'" 
-                    [scoreNumber]="formData.years" 
+                    [captionTooltip]="'Shows the average amount of programming experience in years.'"
+                    [scoreNumber]="formData.years"
                     [captionText]="'Years of Programming experience'">
                 </app-basic-score-display>
             </div>
@@ -22,7 +22,7 @@
                             appChartMarginRemoval
                             [results]="formData.comparedExperience"
                             [labels]="false"
-                            [scheme]="'natural'">
+                            [scheme]="colorScheme">
                             </ngx-charts-pie-chart>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
 
 <ng-template #noYearsData>
     <app-no-data
-    [captionTooltip]="'Shows the average amount of programming experience in years.'" 
+    [captionTooltip]="'Shows the average amount of programming experience in years.'"
     [captionText]="'Years of Programming experience'">
     </app-no-data>
 </ng-template>

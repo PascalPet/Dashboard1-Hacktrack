@@ -17,7 +17,7 @@
             <div class="clr-col-10">
                 <div class="chart-container" *ngIf="formData.percievedSupport.length > 0; else noSupportData">
                     <div class="chart-wrapper">
-                        <ngx-charts-bar-horizontal 
+                        <ngx-charts-bar-horizontal
                         [results]="formData.percievedSupport"
                         [xAxis]="true"
                         [barPadding]="2"
@@ -27,7 +27,7 @@
                         [showXAxisLabel]="false"
                         [yAxis]="true"
                         [trimYAxisTicks]="false"
-                        [scheme]="'natural'">
+                        [scheme]="colorScheme">
                         </ngx-charts-bar-horizontal>
                     </div>
                     <clr-tooltip><h6 class="description" clrTooltipTrigger>Percieved Support of mentors</h6>
