@@ -94,3 +94,11 @@ http://localhost:8080
 ```
 
 This is the current state of the project like it would be served in a production setting.
+
+## Deployment
+
+The current state of the main-branch is deployable through [Heroku](https://dashboard.heroku.com/).
+
+You have to specify the correct buildpack in order to deploy the app which is the python buildpack.
+
+If you want to try out the deployed functionality you may access it here: [Dashathon](https://colaps-dashathon.herokuapp.com/5e6dad8e-4b7b-4869-ba7a-54eee62dfd92)
