@@ -5,6 +5,7 @@ import { average } from '../shared/average';
 import { standardDeviation } from '../shared/standardDeviation';
 import { Session } from "../../models/interfaces/EventMeasures";
 import { isNotNullArray } from '../shared/nullCheckList';
+import {removeNullAnswers} from "../shared/removeNullAnswers";
 
 @Pipe({
   name: 'eventMeasuresPipe'
@@ -98,6 +99,7 @@ export class EventMeasuresPipe implements PipeTransform {
     let  helpAverageList:any[]  = [];
     let  helpSdList: any[] = [];
 
+    removeNullAnswers(eventMeasures.SatisfactionWithHackathon);
     for(const secondSet of Object.entries(eventMeasures.SatisfactionWithHackathon) as any[]){
       if ((secondSet[1] as []).length !== 0 && isNotNullArray(secondSet[1])){
         helpAverageList.push(average(secondSet[1].filter((value:any) => value !== null)));
@@ -112,39 +114,6 @@ export class EventMeasuresPipe implements PipeTransform {
     } else {
       SatisfactionInput = {} as {avg: number, sd: number};
     }
-
-    // // for SatisfactionInput transform
-    // if (isNotNullArray(eventMeasures.SatisfactionWithHackathon.Satisfaction)) {
-    //   for(let entry of eventMeasures.SatisfactionWithHackathon.Satisfaction.filter(value => value !== null)) {
-    //     SatisfactionInput[0].series[entry].value = SatisfactionInput[0].series[entry].value + 1;
-    //   }
-    // } else {
-    //   SatisfactionInput.splice(SatisfactionInput.findIndex(item => item.name === '(1) Very dissatisfied to (5) Very satisfied'), 1);
-    // } //  Satisfaction
-    //
-    // if (isNotNullArray(eventMeasures.SatisfactionWithHackathon.Pleasure)) {
-    //   for(let entry of eventMeasures.SatisfactionWithHackathon.Pleasure.filter(value => value !== null)) {
-    //     SatisfactionInput[1].series[entry].value = SatisfactionInput[1].series[entry].value + 1;
-    //   }
-    // } else {
-    //   SatisfactionInput.splice(SatisfactionInput.findIndex(item => item.name === '(1) Very displeased to (5) Very pleased'), 1);
-    // } // Pleasure
-    //
-    // if (isNotNullArray(eventMeasures.SatisfactionWithHackathon.Contended)) {
-    //   for(let entry of eventMeasures.SatisfactionWithHackathon.Contended.filter(value => value !== null)) {
-    //     SatisfactionInput[2].series[entry].value = SatisfactionInput[2].series[entry].value + 1;
-    //   }
-    // } else {
-    //   SatisfactionInput.splice(SatisfactionInput.findIndex(item => item.name === '(1) Very frustrated to (5) Very contented'), 1);
-    // } // Contented
-    //
-    // if (isNotNullArray(eventMeasures.SatisfactionWithHackathon.Delighted)) {
-    //   for(let entry of eventMeasures.SatisfactionWithHackathon.Delighted.filter(value => value !== null)) {
-    //     SatisfactionInput[3].series[entry].value = SatisfactionInput[3].series[entry].value + 1;
-    //   }
-    // } else {
-    //   SatisfactionInput.splice(SatisfactionInput.findIndex(item => item.name === '(1) Absolutely terrible to (5) Absolutely delighted'), 1);
-    // } // Delighted
 
     if (isNotNullArray(eventMeasures.FutureParticipationIntentions)) {
       // for future transform
@@ -161,8 +130,6 @@ export class EventMeasuresPipe implements PipeTransform {
     let MentoringHelper = 0;
     let NullChecker = true;
     let NotNullEntryAmount = 0;
-
-    //TODO: Hier auf nulls checken!
 
     for(let entry of eventMeasures.SessionEnjoyment) {
       if(entry.PreEventWebinar !== null && entry.Checkpoints !== null && entry.MentoringSessions !== null){

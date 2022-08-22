@@ -4,6 +4,7 @@ import { role } from '../../models/enums/Role';
 import { average } from '../shared/average';
 import { isNotNullArray } from '../shared/nullCheckList';
 import {standardDeviation} from "../shared/standardDeviation";
+import {removeNullAnswers} from "../shared/removeNullAnswers";
 
 @Pipe({
   name: 'teamCompositionPipe'
@@ -35,10 +36,10 @@ export class TeamCompositionPipe implements PipeTransform {
       }
   };
 
-  let  calculatedInput : {[k: string]: any} = {};
   let  helpAverageList:any[]  = [];
   let  helpSdList: any[] = [];
 
+  removeNullAnswers(teamComposition.TeamFamiliarity);
   for(const secondSet of Object.entries(teamComposition.TeamFamiliarity)) {
     if ((secondSet[1] as []).length !== 0 && isNotNullArray(secondSet[1])) {
       helpAverageList.push(average(secondSet[1].filter((value: any) => value !== null)));
